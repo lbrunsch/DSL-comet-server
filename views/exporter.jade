@@ -1,0 +1,10 @@
+link(rel='stylesheet', href='/style.css', type="text/css")
+
+h1 Exporter
+
+div Exporter
+	block findElementBlock
+		form#formUpdateFile(name="updateFile",method="post",action="/exporter")
+			textarea#text(name="text", cols="100", rows="50")
+			br
+			button#btnSubmit(type="submit") submit

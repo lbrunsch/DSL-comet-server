@@ -1,0 +1,23 @@
+{
+  "name": "diagrameditorserver",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Diego Vaquero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongoose": "4.1.1",
+    "method-override": "^2.1.2",
+    "body-parser": "*",
+    "jade": "*",
+    "mongodb-uri" :"*"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "description": ""
+}

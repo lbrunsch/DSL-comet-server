@@ -1,0 +1,28 @@
+link(rel='stylesheet', href='/style.css', type="text/css")
+
+.submit-form
+	block content
+		h1 Palette
+		br
+		.submit-label Name: #{name}
+		br
+		br
+
+
+	//form#formRemovePalette(name="removePalette",method="post",//action="/palettes/#{name}/delete")
+	//		.submit-button
+	//		button#btnSubmit(type="submit") Delete
+
+
+	//Content
+	.submit-text-area
+	textarea#text(name="content", cols="80", rows="20", disabled="disabled") #{content} 
+
+
+	br
+	br
+	br
+
+	a(href="/palettes") Back to palettes
+	br
+	a(href="/") Back to index
