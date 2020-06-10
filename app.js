@@ -53,7 +53,7 @@ app.use('/', indexRouter);
 app.use('/signin', signinRouter);
 //app.use('/signin/login', signinRouter);
 app.use('/signup', signupRouter);
-app.use('/signup/register', usersRouter);
+//app.use('/signup/register', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
