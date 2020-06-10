@@ -21,16 +21,16 @@ router.post("/login", function(req,res){
 
   console.log(req.body.username);
 
-	User.findOne({username:req.body.username}, function(err, user){
+	User.findOne({username:req.body.username}, function(err, Users){
     if(err){
       console.log("Adding error: " + err);
       sendJsonError(res, {code:300, msg:err});
     }else{
       console.log("User found");
-      console.log(user.username);
+      console.log(Users.username);
       //todo bien, comprobamos pass
-      if(user && req.body.password == user.password){
-        sendJsonResponse(res, {role:user.role, msg:"User logged in properly"});
+      if(Users && req.body.password == Users.password){
+        sendJsonResponse(res, {role:Users.role, msg:"User logged in properly"});
       }else{
         //res.redirect("");
         endResponse(res);
