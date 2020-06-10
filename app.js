@@ -1099,8 +1099,8 @@ app.use(router);
 //========================================================
 
 
-var port = process.env.PORT || 8080;
-console.log("Port: "+ port);
+//var port = process.env.PORT || 8080;
+//console.log("Port: "+ port);
 
 
 //Connection events
@@ -1108,9 +1108,9 @@ mongoose.connection.once("open", function(){
 	console.log("We're connected! Start listening...");
 
 	//Start listening
-	app.listen(port, function() {
-		console.log("Node server running, listening on port " +port);
-	});
+	//app.listen(port, function() {
+		//console.log("Node server running, listening on port " +port);
+	//});
 });
 
 mongoose.connection.on("error", function(err){
