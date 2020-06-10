@@ -67,32 +67,32 @@ process.argv.forEach(function (val, index, array) {
 
 
 //Connection events
-mongoose.connection.once("open", function(){
-	console.log("We're connected! Start listening...");
-});
+//mongoose.connection.once("open", function(){
+//	console.log("We're connected! Start listening...");
+//});
 
-mongoose.connection.on("error", function(err){
-	console.log("Error");
-	mongoose.connection.close();
-	process.exit(1);
-});
+//mongoose.connection.on("error", function(err){
+//	console.log("Error");
+//	mongoose.connection.close();
+//	process.exit(1);
+//});
 
 
-mongoose.connection.on("disconnected", function(){
-	console.log("Mongoose disconnected");
-	mongoose.connection.close();
-});
+//mongoose.connection.on("disconnected", function(){
+//	console.log("Mongoose disconnected");
+//	mongoose.connection.close();
+//});
 
-var str = "mongodb://" +username+":"+password + "@ds115546.mlab.com:15546/diagrameditor";
+//var str = "mongodb://" +username+":"+password + "@ds115546.mlab.com:15546/diagrameditor";
 
-var options = {authMechanism: 'ScramSHA1'};
+//var options = {authMechanism: 'ScramSHA1'};
 
-var mongooseUri = uriUtil.formatMongoose(str);
+//var mongooseUri = uriUtil.formatMongoose(str);
 
-mongoose.connect(mongooseUri, options, function(err){
-	if(err){
-		console.log("Error: "+ err);
-	}
-});
+//mongoose.connect(mongooseUri, options, function(err){
+//	if(err){
+//		console.log("Error: "+ err);
+//	}
+//});
 
 module.exports = app;
