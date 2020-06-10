@@ -140,7 +140,7 @@ app.post("/register", function(req, res){
 });
 
 //LOGIN
-app.post("/login/", function(req,res){
+app.post("/login", function(req,res){
 	console.log("POST /login");
 
   console.log(req.body.user);
