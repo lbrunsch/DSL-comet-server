@@ -1,1 +1,1 @@
-web: node server.js miso M0delado_2017*
+web: node bin/www miso M0delado_2017*

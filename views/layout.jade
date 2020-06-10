@@ -1,0 +1,44 @@
+include mixins
+
+doctype
+html( lang="en" )
+    head
+    title= title
+    meta( charset='utf-8' )
+    meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+    meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+    meta( name='description', content='Baking Bootstrap Snippets with Jade' )
+    //- Bootswatch Theme
+    link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+
+    body
+        
+        +nav("DSL-Comet", "dropdown_menu")
+            +nav_item( "/" ) Home
+            +nav_item( "/signin/" ) Sign In
+            +nav_item( "/signup/" ) Sign Up
+            //+nav_item_dropdown( "#" )( label="Artefacts")
+                //+nav_item( "#" ) Ecores
+                //+nav_item( "#" ) Palettes
+                //+nav_item( "#" ) Models
+        
+        center        
+          block content    
+        
+          .jumbotron
+            table
+              tr
+                td
+                  img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/UAM-log.png")
+                td
+                  img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/eps.png")
+                td
+                  img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/miso.png")
+
+            
+    script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+    script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+
+    
+        
+    

@@ -1,18 +1,39 @@
-html
-	link(rel='stylesheet', href='/style.css', type="text/css")
-	
+extends layout
 
-	include main.html
-
-	//h1 Welcome to Diagram Editor Server
-	//br
-	//br
-
-	//body
-	//	a(href="/palettes") Show palettes
-	//	br
-	//	br
-	//	a(href="/ecores") Show ecores
-	//	br
-	//	br
-	//	a(href="/diagrams") Show stored diagrams
+block content
+  .jumbotron
+    table
+      tr
+        td(rowspan="2")
+          img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/iconNoBackground.png")
+        td
+          h1(text-align="center") DSL-Comet
+        td(rowspan="2")
+          img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/iconNoBackground.png")
+      tr
+        td
+          h2(text-align="center") Domain-specific modelling in mobile devices
+    p </br> 
+    p DSL-comet is an iOS tool that allows graphical, collaborative modelling on mobile devices. </br> 
+      | Our architecture permits creating both Sirius and mobile editors from a single description. </br> 
+      | Models can be stored locally or in a server, and they are compatible with EMF.
+  
+  div(id="media-div" align="center")
+    h3 Media
+    iframe(width="840" height="473" src="https://www.youtube.com/embed/rzhl9yMFSxI?rel=0" frameborder="0" allowfullscreen)
+  
+  p <hr> 
+  
+  div(id="links-div")
+    h3 Links
+    -var helpurl="https://itunes.apple.com/es/app/dsl-comet/id1118878610?mt=8"
+    h4 Download: #[a(href=helpurl) #{helpurl}]
+    -var helpurl="http://www.miso.es"
+    h4 Miso group #[a(href=helpurl) #{helpurl}]
+  
+  p <hr> 
+  
+  div(id="contact-div" align="center")
+    h3 Contact
+    p Léa Brunschwig: lea.brunschwig@uam.es
+    

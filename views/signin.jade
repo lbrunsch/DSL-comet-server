@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form(method="POST", action="/signin/login")
+    input(type="hidden", name="_method", value="PUT")
+    p Username: 
+      input(type="text", name="username")
+    p Password: 
+      input(type="text", name="password")
+    p 
+      input(type="submit")
