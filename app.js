@@ -60,6 +60,110 @@ process.argv.forEach(function (val, index, array) {
   }
 });
 
+//========================================================
+//===============   Auxiliar functions   =================
+//========================================================
+
+
+function sendJsonResponse(res, element){
+	//console.log("en sendJsonResponse. Element = " + element);
+	res.setHeader("Content-Type", "application/json");
+	res.send(JSON.stringify({code: "200", array:element}));
+}
+
+function sendJsonError(res, text){
+	//console.log("En sendJsonError. Text = "+ text);
+	res.setHeader("Content-Type", "application/json");
+  console.log(text);
+	res.send(JSON.stringify({error: text}));
+}
+
+function endResponse(res){
+	res.end();
+}
+
+//========================================================
+//=================    LOGIN CONTROLLER   ================
+//========================================================
+//Add a new user
+app.post("/register", function(req, res){
+	//a partir del ? vienen los parámetros
+	console.log("POST /register");
+
+	//var json = JSON.parse(req.body);
+	console.log(req.body);
+	console.log("name: "+req.body.name);
+	console.log("lastname: "+ req.body.lastname);
+	console.log("email: "+req.body.email);
+
+	var name = req.body.name;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+
+  var username = req.body.username;
+  //TODO: Encriptar
+	var password = req.body.password;
+  var role = req.body.role;
+
+	//var decodedImage = new Buffer(imageData, 'base64').toString('binary');
+
+	if(user != null) {
+		var newUser = User({
+			name: name,
+			lastname: lastname,
+			email : email,
+			username : username,
+			password:password,
+      role:role
+			//previewImage : {data : imageData, contentType :"image/png"}
+		});
+
+		newUser.save(function(err){
+			if(err){
+				console.log("Adding error: " + err);
+				sendJsonError(res, {code:300, msg:err});
+			}else{
+				console.log("User added");
+				//todo bien, devolvemos añadido correctamente
+				//if(req.query.json === "true"){
+					sendJsonResponse(res, {code:200, msg:"User added properly"});
+				//}else{
+					//res.redirect("");
+					//endResponse(res);
+				//}
+			}
+		});
+	}else{
+		endResponse(res);
+	}
+
+});
+
+//LOGIN
+app.post("/login/", function(req,res){
+	console.log("POST /login");
+
+  console.log(req.body.username);
+
+	User.findOne({username:req.body.username}, function(err, user){
+    if(err){
+      console.log("Adding error: " + err);
+      sendJsonError(res, {code:300, msg:err});
+    }else{
+      console.log("User found");
+      console.log(user);
+      //todo bien, comprobamos pass
+      if(user && req.body.password == user.password){
+        sendJsonResponse(res, {role:user.role, msg:"User logged in properly"});
+      }else{
+        //res.redirect("");
+        endResponse(res);
+      }
+    }
+
+  });
+});
+
 
 //========================================================
 //================    MONGOOSE    ========================

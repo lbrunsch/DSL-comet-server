@@ -30,10 +30,10 @@ router.post("/login", function(req,res){
       console.log(user);
       //todo bien, comprobamos pass
       if(user && req.body.password == user.password){
-        sendJsonResponse(res, {role:user.role, msg:"User logged in properly"});
+        console.log("User logged in properly");
       }else{
         //res.redirect("");
-        endResponse(res);
+        res.end();
       }
     }
 
