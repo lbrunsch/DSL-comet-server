@@ -41,22 +41,22 @@ var userSchema = new Schema({
 });
 
 //make sure the emails are uniqueValidator
-userSchema.plugin(uniqueValidator);
+//userSchema.plugin(uniqueValidator);
 
-userSchema.pre("save", function(next) {
-	let user = this;
+//userSchema.pre("save", function(next) {
+//	let user = this;
 
-	if (!user.isModified('password')) {
-		return next();
-	}
+//	if (!user.isModified('password')) {
+//		return next();
+//	}
 
-bcrypt.genSalt(12).then((salt) => {
-	return bcrypt.hash(user.password, salt);
-}).then((hash) => {
-	user.password = hash;
-	next();
-}).catch((err) => next(err));
-});
+//bcrypt.genSalt(12).then((salt) => {
+//	return bcrypt.hash(user.password, salt);
+//}).then((hash) => {
+//	user.password = hash;
+//	next();
+//}).catch((err) => next(err));
+//});
 
 User = mongoose.model("User", userSchema);
 module.exports = User;
