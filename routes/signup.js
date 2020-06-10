@@ -28,7 +28,7 @@ router.post("/register", function(req, res){
 
 	//var decodedImage = new Buffer(imageData, 'base64').toString('binary');
 
-	if(user != null) {
+	if(username != null) {
 		var newUser = User({
 			name: name,
 			lastname: lastname,
