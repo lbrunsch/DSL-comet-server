@@ -143,9 +143,9 @@ app.post("/register", function(req, res){
 app.post("/login/", function(req,res){
 	console.log("POST /login");
 
-  console.log(req.body.username);
+  console.log(req.body.user);
 
-	User.findOne({user:req.body.username}, function(err, user){
+	User.findOne({user:req.body.user}, function(err, user){
     if(err){
       console.log("Adding error: " + err);
       sendJsonError(res, {code:300, msg:err});
