@@ -7,6 +7,15 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
 
+//mongoose entity vars
+var Palette = require("./models/palette");
+var Diagram = require("./models/diagram");
+var Ecore = require("./models/ecore");
+var Json = require("./models/json");
+var Role = require("./models/role");
+var User = require('./models/user')
+var database = "diagrameditor";
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signinRouter = require('./routes/signin');
