@@ -17,6 +17,8 @@ var Role = require("./models/role");
 var User = require('./models/user')
 var database = "diagrameditor";
 
+var router = express.Router();
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signinRouter = require('./routes/signin');
@@ -117,7 +119,7 @@ function endResponse(res){
 //========================================================
 //====================    Palettes   =====================
 //========================================================
-app.get("/palettes", function(req, res){
+router.get("/palettes", function(req, res){
 	console.log("GET /palettes");
 
 	var version = req.query.version;
@@ -163,7 +165,7 @@ app.get("/palettes", function(req, res){
 
 
 //Add new palette
-app.post("/palettes", function(req, res){
+router.post("/palettes", function(req, res){
 	//a partir del ? vienen los parámetros
 
 	var name = req.body.name;
@@ -219,7 +221,7 @@ app.post("/palettes", function(req, res){
 
 
 //Get a stored palette
-app.get("/palettes/:pname", function(req,res){
+router.get("/palettes/:pname", function(req,res){
 	console.log("GET /palettes/" + req.params.pname);
 
 	Palette.findOne({name:req.params.pname}, function(err, palette){
@@ -245,7 +247,7 @@ app.get("/palettes/:pname", function(req,res){
 
 
 //Remove a palette
-app.post("/palettes/:pname/delete", function(req, res){
+router.post("/palettes/:pname/delete", function(req, res){
 	console.log("DELETE /palettes/"+ req.params.pname.toLowerCase());
 
 	Palette.findOne({name:req.params.pname}, function(err, palette){
@@ -288,7 +290,7 @@ app.post("/palettes/:pname/delete", function(req, res){
 
 
 //Update a palette
-app.put("/palettes/:pname", function(req, res){
+router.put("/palettes/:pname", function(req, res){
 	console.log("PUT /palettes/"+req.params.pname);
 
 	Palette.findOne({name:req.params.pname}, function(err, palette){
@@ -331,7 +333,7 @@ app.put("/palettes/:pname", function(req, res){
 //========================================================
 //====================     eCores    =====================
 //========================================================
-app.get("/ecores", function(req, res){
+router.get("/ecores", function(req, res){
 	console.log("GET /ecores");
 		Ecore.find({}, function(err, ecores){
 			if(err){
@@ -350,7 +352,7 @@ app.get("/ecores", function(req, res){
 });
 
 
-app.post("/ecores", function(req, res){
+router.post("/ecores", function(req, res){
 	//a partir del ? vienen los parámetros
 	console.log("\n\n POST /ecores");
 
@@ -518,7 +520,7 @@ function parseEcoreToGraphicR (ecore){
 }
 
 //Get a stored ecore
-app.get("/ecores/:ename", function(req,res){
+router.get("/ecores/:ename", function(req,res){
 	console.log("GET /ecores/" + req.params.ename);
 
 
@@ -555,7 +557,7 @@ app.get("/ecores/:ename", function(req,res){
 });
 
 //Remove an ecore
-app.post("/ecores/:ename/delete", function(req, res){
+router.post("/ecores/:ename/delete", function(req, res){
 	console.log("POST /ecores/.../delete"+ req.params.ename);
 
 	Ecore.findOne({name:req.params.ename}, function(err, ecore){
@@ -619,7 +621,7 @@ app.post("/ecores/:ename/delete", function(req, res){
 //========================================================
 
 console.log("GET /jsons/");
-app.get("/jsons", function(req, res){
+router.get("/jsons", function(req, res){
 	console.log("GET /jsons");
 		Json.find({}, function(err, jsons){
 			if(err){
@@ -637,7 +639,7 @@ app.get("/jsons", function(req, res){
 		});
 });
 
-app.get("/jsons/:name", function(req, res){
+router.get("/jsons/:name", function(req, res){
 	console.log("GET /jsons/", req.params.name.replace(/ /g,''));
 
 	//Abro el json que se llama así
@@ -674,7 +676,7 @@ app.get("/jsons/:name", function(req, res){
 });
 
 //JSON by uri
-app.get("/jsonbyuri/", function(req, res){
+router.get("/jsonbyuri/", function(req, res){
 
 	console.log("\t/jsonbyuri");
 	//Devuelvo un json con content el contenido del fichero
@@ -722,7 +724,7 @@ app.get("/jsonbyuri/", function(req, res){
 //====================    Diagrams   =====================
 //========================================================
 //Get all diagrams
-app.get("/diagrams", function(req, res){
+router.get("/diagrams", function(req, res){
 	console.log("GET /diagrams")
 
 	Diagram.find({}, function(err, diagrams){
@@ -741,7 +743,7 @@ app.get("/diagrams", function(req, res){
 });
 
 //Add a new diagram
-app.post("/diagrams", function(req, res){
+router.post("/diagrams", function(req, res){
 	//a partir del ? vienen los parámetros
 	console.log("POST /diagrams");
 
@@ -796,7 +798,7 @@ app.post("/diagrams", function(req, res){
 });
 
 //Get a stored diagram
-app.get("/diagrams/:dname", function(req,res){
+router.get("/diagrams/:dname", function(req,res){
 	console.log("GET /diagrams/" + req.params.dname);
 
 	Diagram.findOne({name:req.params.dname}, function(err, diagram){
@@ -819,7 +821,7 @@ app.get("/diagrams/:dname", function(req,res){
 });
 
 //Get associated image of a diagram
-app.get("/diagrams/:dname/image", function(req,res){
+router.get("/diagrams/:dname/image", function(req,res){
 	console.log("GET /diagrams/" + req.params.dname+ "/image" );
 
 	Diagram.findOne({name:req.params.dname}, function(err, diagram){
@@ -834,7 +836,7 @@ app.get("/diagrams/:dname/image", function(req,res){
 });
 
 //Remove a diagram
-app.delete("/diagrams/:dname", function(req, res){
+router.delete("/diagrams/:dname", function(req, res){
 	console.log("DELETE /diagrams/"+ req.params.dname);
 
 	Diagram.findOne({name:req.params.dname}, function(err, diagram){
@@ -874,7 +876,7 @@ app.delete("/diagrams/:dname", function(req, res){
 
 
 //Update a diagram
-app.put("/diagrams/:dname", function(req, res){
+router.put("/diagrams/:dname", function(req, res){
 	console.log("PUT /diagrams/"+req.params.dname);
 
 	Diagram.findOne({name:req.params.dname}, function(err, diag){
@@ -918,7 +920,7 @@ app.put("/diagrams/:dname", function(req, res){
 //========================================================
 //=================    JSON EXPORTER   ===================
 //========================================================
-app.post("/exporter", function(req, res){
+router.post("/exporter", function(req, res){
 
 	if(req.query.json === "true"){
 
@@ -987,12 +989,12 @@ app.post("/exporter", function(req, res){
 
 
 
-app.get("/exporter", function(req, res){
+router.get("/exporter", function(req, res){
 	res.render("exporter");
 });
 
 
-app.get("/jsonTest", function(req, res){
+router.get("/jsonTest", function(req, res){
 	sendJsonResponse(res,  {code:200, msg:"Diagram removed"});
 });
 
@@ -1000,7 +1002,7 @@ app.get("/jsonTest", function(req, res){
 //=================    LOGIN CONTROLLER   ================
 //========================================================
 //Add a new user
-app.post("/register", function(req, res){
+router.post("/register", function(req, res){
 	//a partir del ? vienen los parámetros
 	console.log("POST /register");
 
@@ -1054,7 +1056,7 @@ app.post("/register", function(req, res){
 });
 
 //LOGIN
-app.post("/login", function(req,res){
+router.post("/login", function(req,res){
 	console.log("POST /login");
 
   console.log(req.body.user);
