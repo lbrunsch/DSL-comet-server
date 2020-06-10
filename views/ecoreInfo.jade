@@ -1,0 +1,28 @@
+extends layout
+
+link(rel='stylesheet', href='/style.css', type="text/css")
+
+block content
+.submit-form
+	block content2
+		h1 Ecore
+		br
+		.submit-label Name: #{name}
+		br
+		br
+
+	//form#formRemoveEcore(name="removeEcore",method="post",action="/ecores/#{name}/delete")
+	//		.submit-button
+	//		button#btnSubmit(type="submit") Delete
+
+
+	.submit-text-area
+	textarea#text(name="content2", cols="80", rows="20", disabled="disabled") #{content} 
+
+	br
+	br
+	br
+
+	a(href="/ecores") Back to ecores
+	br
+	a(href="/") Back to index
