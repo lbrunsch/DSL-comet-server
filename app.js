@@ -112,7 +112,7 @@ app.post("/register", function(req, res){
 			name: name,
 			lastname: lastname,
 			email : email,
-			username : username,
+			user : username,
 			password:password,
       role:role
 			//previewImage : {data : imageData, contentType :"image/png"}
@@ -145,7 +145,7 @@ app.post("/login/", function(req,res){
 
   console.log(req.body.username);
 
-	User.findOne({username:req.body.username}, function(err, user){
+	User.findOne({user:req.body.username}, function(err, user){
     if(err){
       console.log("Adding error: " + err);
       sendJsonError(res, {code:300, msg:err});

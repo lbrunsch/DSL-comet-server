@@ -20,7 +20,7 @@ var userSchema = new Schema({
 		required:true,
 		unique:true
 	},
-  username: {
+  user: {
 		type:String,
 		required:true,
 		unique:true
