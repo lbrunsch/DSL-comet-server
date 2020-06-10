@@ -58,5 +58,5 @@ var userSchema = new Schema({
 //}).catch((err) => next(err));
 //});
 
-User = mongoose.model("User", userSchema);
+User = mongoose.model("User", userSchema, "user");
 module.exports = User;
