@@ -25,7 +25,6 @@ router.post("/register", function(req, res){
   var username = req.body.username;
   //TODO: Encriptar
 	var password = req.body.password;
-  var role = req.body.role;
 
 	//var decodedImage = new Buffer(imageData, 'base64').toString('binary');
 
@@ -36,7 +35,7 @@ router.post("/register", function(req, res){
 			email : email,
 			username : username,
 			password:password,
-      role:role
+      role:"editor"
 			//previewImage : {data : imageData, contentType :"image/png"}
 		});
 
