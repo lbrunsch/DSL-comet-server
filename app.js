@@ -85,11 +85,11 @@ process.argv.forEach(function (val, index, array) {
 
 var str = "mongodb://" +username+":"+password + "@ds115546.mlab.com:15546/diagrameditor";
 
-var options = {authMechanism: 'ScramSHA1'};
+//var options = {authMechanism: 'ScramSHA1'};
 
-var mongooseUri = uriUtil.formatMongoose(str);
+//var mongooseUri = uriUtil.formatMongoose(str);
 
-mongoose.connect(mongooseUri, options, function(err){
+mongoose.connect(str, function(err){
 	if(err){
 		console.log("Error: "+ err);
 	}
