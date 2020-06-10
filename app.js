@@ -20,7 +20,7 @@ var database = "diagrameditor";
 var router = express.Router();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
 var signinRouter = require('./routes/signin');
 var signupRouter = require('./routes/signup');
 
@@ -337,12 +337,15 @@ router.get("/ecores", function(req, res){
 	console.log("GET /ecores");
 		Ecore.find({}, function(err, ecores){
 			if(err){
+        console.log("coucou");
 				console.log("Error: "+err);
 			}
 
 			if(req.query.json ==="true"){
+        console.log("lol");
 				sendJsonResponse(res, ecores);
 			}else{
+        console.log("hehe");
 				//Cargar la web
 				res.render("ecoreList",{
 					ecorelist:ecores
