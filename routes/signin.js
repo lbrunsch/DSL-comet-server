@@ -27,7 +27,7 @@ router.post("/login", function(req,res){
       sendJsonError(res, {code:300, msg:err});
     }else{
       console.log("User found");
-      console.log(user);
+      console.log(user.username);
       //todo bien, comprobamos pass
       if(user && req.body.password == user.password){
         sendJsonResponse(res, {role:user.role, msg:"User logged in properly"});
