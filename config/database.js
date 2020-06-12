@@ -1,16 +1,16 @@
 var mongoose = require('mongoose');
-var port = process.env.PORT || 8080;
-var express = require('express');
-app = express();
+//var port = process.env.PORT || 8080;
+//var express = require('express');
+//app = express();
 
 //Connection events
 mongoose.connection.once("open", function(){
   console.log("We're connected! Start listening...");
 
   //Start listening
-  app.listen(port, function() {
-    console.log("Node server running, listening on port " +port);
-  });
+  //app.listen(port, function() {
+  //  console.log("Node server running, listening on port " +port);
+  //});
 });
 
 mongoose.connection.on("error", function(err){
