@@ -15,6 +15,7 @@ module.exports = {
   	res.send(JSON.stringify({error: text}));
   },
   endResponse: function (res){
+    console.log("coucou jsuis la");
   	res.end();
   }
 }

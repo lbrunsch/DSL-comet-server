@@ -11,7 +11,7 @@ module.exports = {
 
     console.log(req.body.username);
 
-  	User.findOne({username:req.body.username}, function(err, user){
+  	User.findOne({user:req.body.username}, function(err, user){
       if(err){
         console.log("Adding error: " + err);
         util.sendJsonError(res, {code:300, msg:err});
@@ -23,6 +23,7 @@ module.exports = {
           console.log("User logged in properly");
         }else{
           //res.redirect("");
+          console.log("looooool");
           util.endResponse(res);
         }
       }
