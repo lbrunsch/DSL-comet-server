@@ -17,6 +17,4 @@ module.exports = function(app, envConfig){
     app.use(cookieParser());
     // telling Express to serve static objects from the /public/ dir, but make it seem like the top level
     app.use(express.static(path.join(envConfig.rootPath, 'public')));
-    app.use(bodyParser.json({limit: '50mb'}));
-    app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 };

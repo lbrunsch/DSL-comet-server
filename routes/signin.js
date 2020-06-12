@@ -1,3 +1,5 @@
+var util = require('../config/util');
+
 const User = require('../models/user');
 
 module.exports = {
@@ -12,7 +14,7 @@ module.exports = {
   	User.findOne({username:req.body.username}, function(err, user){
       if(err){
         console.log("Adding error: " + err);
-        sendJsonError(res, {code:300, msg:err});
+        util.sendJsonError(res, {code:300, msg:err});
       }else{
         console.log("User found");
         console.log(user);
@@ -21,7 +23,7 @@ module.exports = {
           console.log("User logged in properly");
         }else{
           //res.redirect("");
-          res.end();
+          util.endResponse(res);
         }
       }
 

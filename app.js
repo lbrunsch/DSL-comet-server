@@ -1,11 +1,5 @@
 var express = require('express');
-var path = require('path');
-var methodOverride = require("method-override");
-
-
-var router = express.Router();
 var app = express();
-
 
 // Environments
 var env = process.env.NODE_ENV || 'development';
