@@ -10,7 +10,7 @@ module.exports = function(app, envConfig){
     app.set('views', path.join(envConfig.rootPath, 'views'));
     app.set('view engine', 'jade');
 
-    app.use(favicon(__dirname + '/public/images/favicon.ico'));
+    app.use(favicon(__dirname + '../public/images/favicon.ico'));
     app.use(logger('dev'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
