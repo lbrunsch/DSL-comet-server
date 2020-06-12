@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
 var methodOverride = require("method-override");
+var favicon = require('server-favicon');
 
 //mongoose entity vars
 var Palette = require("./models/palette");
@@ -29,6 +30,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 app.use(logger('dev'));
 app.use(express.json());
