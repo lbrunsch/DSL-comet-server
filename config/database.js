@@ -3,12 +3,12 @@ var mongoose = require('mongoose');
 module.exports = function(envConfig){
     // register models
     //mongoose entity vars
-    var Palette = require("./models/palette");
-    var Diagram = require("./models/diagram");
-    var Ecore = require("./models/ecore");
-    var Json = require("./models/json");
-    var Role = require("./models/role");
-    var User = require('./models/user')
+    var Palette = require("../models/palette");
+    var Diagram = require("../models/diagram");
+    var Ecore = require("../models/ecore");
+    var Json = require("../models/json");
+    var Role = require("../models/role");
+    var User = require('../models/user')
     var database = "diagrameditor";
 
     // connect to database
