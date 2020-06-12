@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
 var methodOverride = require("method-override");
-var favicon = require('server-favicon');
+var favicon = require('serve-favicon');
 
 //mongoose entity vars
 var Palette = require("./models/palette");
