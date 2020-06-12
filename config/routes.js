@@ -6,18 +6,48 @@ module.exports = function(app){
   //var usersRouter = require('../routes/users');
   var signin = require('../routes/signin');
   var signup = require('../routes/signup');
+  var palettes = require('../routes/palettes');
+  var ecores = require('../routes/ecores');
+  var json = require('../routes/json');
+  var diagrams = require('../routes/diagrams');
 
   var signinRouter = express.Router();
   var signupRouter = express.Router();
+  var palettesRouter = express.Router();
+  var ecoresRouter = express.Router();
+  var jsonRouter = express.Router();
+  var diagramsRouter = express.Router();
 
   app.use('/signin', signinRouter);
   app.use('/signup', signupRouter);
+  app.use('/palettes', palettesRouter);
+  app.use('/ecores', ecoresRouter);
+  app.use('/jsons', jsonRouter);
+  app.use('/diagrams', diagramsRouter);
 
   app.get('/', main.index);
   signinRouter.get('/', signin.displayForm);
   signinRouter.post('/login', signin.login);
   signupRouter.get('/', signup.displayForm);
   signupRouter.post('/register', signup.register);
+  palettesRouter.get('/', palettes.showPalettesList);
+  palettesRouter.post('/', palettes.addNewPalette);
+  palettesRouter.get('/:pname', palettes.getPalette);
+  palettesRouter.post('/:pname/delete', palettes.removePalette);
+  palettesRouter.put('/:pname', palettes.updatePalette);
+  ecoresRouter.get('/', ecores.showEcoreList);
+  ecoresRouter.post('/', ecores.addEcore);
+  ecoresRouter.get('/:ename', ecores.getEcore);
+  ecoresRouter.post('/:ename/delete', ecores.removeEcore);
+  jsonRouter.get('/', json.json);
+  jsonRouter.get('/:name', json.getJson);
+  app.get('/jsonbyuri', json.jsonByUri);
+  diagramsRouter.get('/', diagrams.showDiagramsList);
+  diagramsRouter.post('/', diagrams.addNewDiagram);
+  diagramsRouter.get('/:dname', diagrams.getDiagram);
+  diagramsRouter.get('/:dname/image', diagrams.getDiagramImage);
+  diagramsRouter.delete('/:dname', diagrams.removeDiagram);
+  diagramsRouter.put(':dname', diagrams.updateDiagram);
 
 
   // catch 404 and forward to error handler
