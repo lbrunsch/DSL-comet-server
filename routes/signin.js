@@ -47,6 +47,7 @@ module.exports = {
         util.sendJsonError(res, {code:300, msg:err});
       } else {
         console.log("User logged in properly");
+        util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
       }
     }
   }
