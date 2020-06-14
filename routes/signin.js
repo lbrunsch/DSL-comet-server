@@ -30,7 +30,7 @@ module.exports = {
 
     });
   },
-  login: async (req,res) => {
+  login: function (req,res) {
   	console.log("POST /login");
 
     console.log(req.body.username);

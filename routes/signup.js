@@ -44,7 +44,7 @@ module.exports = {
   	}
 
   },
-  register: async (req, res) => {
+  register: function (req, res) {
   	console.log("POST /register");
   	console.log(req.body);
 
