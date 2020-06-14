@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var UserSchema = new Schema({
 	name: {
 		type:String,
 		required:true,
@@ -18,11 +18,14 @@ var userSchema = new Schema({
   email: {
 		type:String,
 		required:true,
+    minlength: 1,
+		trim: true,
 		unique:true
 	},
   user: {
 		type:String,
 		required:true,
+		trim: true,
 		unique:true
 	},
   password: {
@@ -38,22 +41,22 @@ var userSchema = new Schema({
 });
 
 //make sure the emails are uniqueValidator
-//userSchema.plugin(uniqueValidator);
+UserSchema.plugin(uniqueValidator);
 
-//userSchema.pre("save", function(next) {
-//	let user = this;
+UserSchema.pre("save", function(next) {
+	let user = this;
 
-//	if (!user.isModified('password')) {
-//		return next();
-//	}
+	if (!user.isModified('password')) {
+		return next();
+	}
 
-//bcrypt.genSalt(12).then((salt) => {
-//	return bcrypt.hash(user.password, salt);
-//}).then((hash) => {
-//	user.password = hash;
-//	next();
-//}).catch((err) => next(err));
-//});
+bcrypt.genSalt(12).then((salt) => {
+	return bcrypt.hash(user.password, salt);
+}).then((hash) => {
+	user.password = hash;
+	next();
+}).catch((err) => next(err));
+});
 
-User = mongoose.model("User", userSchema);
+User = mongoose.model("User", UserSchema);
 module.exports = User;
