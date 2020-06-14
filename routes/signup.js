@@ -75,7 +75,7 @@ module.exports = {
   			password:password,
         role: role
   		});
-      const persistedUser = await user.save();
+      const persistedUser = await newUser.save();
       util.sendJsonResponse(res, {code:200, msg:"User added properly"});
 
       const userId = persistedUser._id;
