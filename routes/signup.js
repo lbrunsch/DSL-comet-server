@@ -1,6 +1,14 @@
 var util = require('../config/util');
 
 var User = require('../models/user');
+const Session = require('../models/session');
+
+const initSession = async (userId) => {
+  const token = await Session.generateToken();
+  const session = new Session({ token, userId });
+  await session.save();
+  return session;
+};
 
 module.exports = {
   displayForm: function(req, res, next) {
@@ -45,21 +53,21 @@ module.exports = {
 
   },
   register: async (req, res) => {
-  	console.log("POST /register");
+    console.log("POST /register");
   	console.log(req.body);
+    try {
+      var name = req.body.name;
+    	var lastname = req.body.lastname;
+    	var email = req.body.email;
+      var username = req.body.username;
+    	var password = req.body.password;
+      if(req.body.role !== null) {
+        var role = req.body.role;
+      } else {
+        var role = "editor";
+      }
 
-  	var name = req.body.name;
-  	var lastname = req.body.lastname;
-  	var email = req.body.email;
-
-    var username = req.body.username;
-    //TODO: Encriptar
-  	var password = req.body.password;
-
-    var role = "editor";
-
-  	if(username != null) {
-  		var newUser = User({
+      var newUser = User({
   			name: name,
   			lastname: lastname,
   			email: email,
@@ -67,21 +75,20 @@ module.exports = {
   			password:password,
         role: role
   		});
-
-  		const persistedUser = await newUser.save(function(err){
-  			if(err){
-  				console.log("Adding error: " + err);
-          util.sendJsonError(res, {code:300, msg:err});
-  			}else{
-  				console.log("User added");
-            util.sendJsonResponse(res, {code:200, msg:"User added properly"});
-  			}
-  		});
+      const persistedUser = await user.save();
+      util.sendJsonResponse(res, {code:200, msg:"User added properly"});
 
       const userId = persistedUser._id;
-  	}else{
-  		util.endResponse(res);
-  	}
+      const session = await initSession(userId);
+      res.cookie('token', session.token, {
+        httpOnly: true,
+        sameSite: true,
+        maxAge : 1209600000, // 2 weeks
+        secure: process.env.NODE_ENV === 'production',
+      });
+    } catch (err) {
+      util.sendJsonError(res, {code:300, msg:err});
+    }
 
   }
 };

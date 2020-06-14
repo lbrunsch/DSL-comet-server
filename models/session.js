@@ -37,3 +37,5 @@ SessionSchema.methods.expireToken = function() {
   const session = this;
   return session.update({ $set: { status: 'expired' } });
 };
+
+module.exports = mongoose.model('Session', SessionSchema);

@@ -31,24 +31,34 @@ module.exports = {
     });
   },
   login: async (req,res) => {
-  	console.log("POST /login");
-
+    console.log("POST /login");
     console.log(req.body.username);
-
-    const user = await User.findOne({user:req.body.username});
-    if (!user) {
-      util.sendJsonError(res, {code:300, msg:err});
-    } else {
+    try {
+      const user = await User.findOne({user:req.body.username});
+      if (!user) {
+        throw new Error();
+      }
       console.log("User found");
       console.log(user);
+
+      const userId = user._id;
+
       // compare the passwords
       const passwordValidated = await bcrypt.compare(req.body.password, user.password);
       if (!passwordValidated) {
-        util.sendJsonError(res, {code:300, msg:err});
-      } else {
-        console.log("User logged in properly");
-        util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
+        throw new Error();
       }
+      console.log("User logged in properly");
+      util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
+
+      res.cookie('token', session.token, {
+        httpOnly: true,
+        sameSite: true,
+        maxAge: 1209600000,
+        secure: process.env.NODE_ENV === 'production',
+      });
+    } catch (err) {
+      util.sendJsonError(res, {code:300, msg:err});
     }
   }
 };
