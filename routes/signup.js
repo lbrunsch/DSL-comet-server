@@ -87,7 +87,35 @@ module.exports = {
       });
 
       res.render('index', { title: 'DSL-Comet', user:newUser.user, bool:true });
+    } catch (err) {
+      res.render('error');
+    }
 
+  },
+  registerApp: async (req, res) => {
+    console.log("POST /registerApp");
+  	console.log(req.body);
+    try {
+      var name = req.body.name;
+    	var lastname = req.body.lastname;
+    	var email = req.body.email;
+      var username = req.body.username;
+    	var password = req.body.password;
+      if(req.body.role != null) {
+        var role = req.body.role;
+      } else {
+        var role = "editor";
+      }
+
+      var newUser = User({
+  			name: name,
+  			lastname: lastname,
+  			email: email,
+  			user: username,
+  			password:password,
+        role: role
+  		});
+      const persistedUser = await newUser.save();
       util.sendJsonResponse(res, {code:200, msg:"User added properly"});
     } catch (err) {
       util.sendJsonError(res, {code:300, msg:err});

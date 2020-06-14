@@ -68,7 +68,27 @@ module.exports = {
       });
 
   		res.render('index', { title: 'DSL-Comet', user:user.user, bool:true });
+    } catch (err) {
+      res.render('error');
+    }
+  },
+  loginApp: async (req,res) => {
+    console.log("POST /loginApp");
+    console.log(req.body.username);
+    try {
+      const user = await User.findOne({user:req.body.username});
+      if (!user) {
+        throw new Error();
+      }
+      console.log("User found");
+      console.log(user);
 
+      // compare the passwords
+      const passwordValidated = await bcrypt.compare(req.body.password, user.password);
+      if (!passwordValidated) {
+        throw new Error();
+      }
+      console.log("User logged in properly");
       util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
     } catch (err) {
       util.sendJsonError(res, {code:300, msg:err});

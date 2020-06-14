@@ -29,8 +29,10 @@ module.exports = function(app){
   app.get('/', authenticate,  main.index);
   signinRouter.get('/', signin.displayForm);
   signinRouter.post('/login', signin.login);
+  signinRouter.post('/loginApp', signin.loginApp);
   signupRouter.get('/', signup.displayForm);
   signupRouter.post('/register', signup.register);
+  signupRouter.post('/registerApp', signup.registerApp);
   palettesRouter.get('/', palettes.showPalettesList);
   palettesRouter.post('/', palettes.addNewPalette);
   palettesRouter.get('/:pname', palettes.getPalette);
