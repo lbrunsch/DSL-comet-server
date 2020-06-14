@@ -61,7 +61,7 @@ module.exports = {
     	var email = req.body.email;
       var username = req.body.username;
     	var password = req.body.password;
-      if(req.body.role !== null) {
+      if(req.body.role != null) {
         var role = req.body.role;
       } else {
         var role = "editor";
@@ -76,7 +76,6 @@ module.exports = {
         role: role
   		});
       const persistedUser = await newUser.save();
-      util.sendJsonResponse(res, {code:200, msg:"User added properly"});
 
       const userId = persistedUser._id;
       const session = await initSession(userId);
@@ -86,6 +85,10 @@ module.exports = {
         maxAge : 1209600000, // 2 weeks
         secure: process.env.NODE_ENV === 'production',
       });
+
+      res.render('index', { title: 'DSL-Comet', user:newUser.user, bool:true });
+
+      util.sendJsonResponse(res, {code:200, msg:"User added properly"});
     } catch (err) {
       util.sendJsonError(res, {code:300, msg:err});
     }

@@ -4,14 +4,15 @@ const authenticate = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token || typeof token !== 'string') {
-      throw new Error('Request cookie is invalid.');
+      console.log('Request cookie is invalid.');
+    } else {
+      const session = await Session.findOne({ token, status: 'valid' });
+      if(!session) {
+        res.clearCookie('token');
+        console.log('Your session has expired. You need to log in.');
+      }
+      req.session = session;
     }
-    const session = await Session.findOne({ token, status: 'valid' });
-    if(!session) {
-      res.clearCookie('token');
-      throw new Error('Your session has expired. You need to log in.');
-    }
-    req.session = session;
     next();
   } catch (err) {
     res.status(401).json({

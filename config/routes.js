@@ -1,4 +1,5 @@
 var express = require('express');
+const { authenticate } = require('../middleware/authenticate');
 
 module.exports = function(app){
 
@@ -25,7 +26,7 @@ module.exports = function(app){
   app.use('/jsons', jsonRouter);
   app.use('/diagrams', diagramsRouter);
 
-  app.get('/', main.index);
+  app.get('/', authenticate,  main.index);
   signinRouter.get('/', signin.displayForm);
   signinRouter.post('/login', signin.login);
   signupRouter.get('/', signup.displayForm);
@@ -48,7 +49,7 @@ module.exports = function(app){
   diagramsRouter.get('/:dname/image', diagrams.getDiagramImage);
   diagramsRouter.delete('/:dname', diagrams.removeDiagram);
   diagramsRouter.put(':dname', diagrams.updateDiagram);
-
+  app.get('/logout', authenticate,  main.logOut);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

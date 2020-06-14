@@ -2,6 +2,14 @@ const bcrypt = require('bcryptjs');
 var util = require('../config/util');
 
 const User = require('../models/user');
+const Session = require('../models/session');
+
+const initSession = async (userId) => {
+  const token = await Session.generateToken();
+  const session = new Session({ token, userId });
+  await session.save();
+  return session;
+};
 
 module.exports = {
   displayForm: function(req, res, next) {
@@ -49,14 +57,19 @@ module.exports = {
         throw new Error();
       }
       console.log("User logged in properly");
-      util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
+
+      const session = await initSession(userId);
 
       res.cookie('token', session.token, {
         httpOnly: true,
         sameSite: true,
-        maxAge: 1209600000,
+        maxAge : 1209600000, // 2 weeks
         secure: process.env.NODE_ENV === 'production',
       });
+
+  		res.render('index', { title: 'DSL-Comet', user:user.user, bool:true });
+
+      util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
     } catch (err) {
       util.sendJsonError(res, {code:300, msg:err});
     }

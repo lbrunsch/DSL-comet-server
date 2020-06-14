@@ -15,8 +15,8 @@ html( lang="en" )
         
         +nav("DSL-Comet", "dropdown_menu")
             +nav_item( "/" ) Home
-            if loggedIn
-              +nav_item( "/signin/" ) Log Out
+            if bool
+              +nav_item( "/logout/" ) Log Out #{user}
               +nav_item_dropdown( "#" )( label="Artefacts")
                   +nav_item( "/ecores" ) Ecores
                   +nav_item( "/palettes" ) Palettes
