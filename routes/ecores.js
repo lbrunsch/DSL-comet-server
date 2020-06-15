@@ -14,6 +14,7 @@ if (!fs.existsSync(dir)){
 
 const Ecore = require('../models/ecore');
 const Json = require('../models/json');
+var User = require('../models/user');
 
 function writeEcoreFileToFolder(ecore, uri){
 
@@ -94,18 +95,38 @@ function parseEcoreToGraphicR (ecore){
 module.exports = {
   showEcoreList: function(req, res){
   	console.log("GET /ecores");
-  		Ecore.find({}, function(err, ecores){
-  			if(err){
+  		Ecore.find({}, async (err, ecores) => {
+				try {
+					if(req.query.json ==="true"){
+	  				util.sendJsonResponse(res, ecores);
+	  			} else{
+	          if(req.session != null) {
+	            const { userId } = req.session;
+	    				if(userId) {
+	              const user = await User.findById({ _id: userId });
+	              res.render("ecoreList",{
+			  					ecorelist:ecores,
+									user: user.user,
+	                connected: true
+	      				});
+	            } else {
+	              res.render("ecoreList",{
+			  					ecorelist:ecores,
+									user: '',
+	                connected: false
+	      				});
+	            }
+	          } else {
+	            //Cargar la web
+	    				res.render("ecoreList",{
+		  					ecorelist:ecores,
+								user:'',
+	              connected: false
+	    				});
+	          }
+	  			}
+				}catch (err){
   				console.log("Error: "+err);
-  			}
-
-  			if(req.query.json ==="true"){
-  				util.sendJsonResponse(res, ecores);
-  			}else{
-  				//Cargar la web
-  				res.render("ecoreList",{
-  					ecorelist:ecores
-  				});
   			}
   		});
   },

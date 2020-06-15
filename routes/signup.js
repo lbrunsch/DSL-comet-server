@@ -86,7 +86,7 @@ module.exports = {
         secure: process.env.NODE_ENV === 'production',
       });
 
-      res.render('index', { title: 'DSL-Comet', user:newUser.user, bool:true });
+      res.render('index', { title: 'DSL-Comet', user:newUser.user, connected:true });
     } catch (err) {
       res.render('error');
     }

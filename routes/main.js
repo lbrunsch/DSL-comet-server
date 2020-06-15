@@ -17,20 +17,20 @@ module.exports = {
 			if (req.session != null) {
 				console.log("coucou");
 				const { userId } = req.session;
+				console.log("index user id : "+ userId);
 
 				if(userId) {
-					console.log("bouh");
-					// only retrieve the authenticated user's email
 		    	const user = await User.findById({ _id: userId });
 
-					res.render('index', { title: 'DSL-Comet', user: user.user, bool: true });
+						console.log("bouh "+ user);
+					res.render('index', { title: 'DSL-Comet', user: user.user, connected: true });
 				} else {
 					console.log("OH NO");
-					res.render('index', { title: 'DSL-Comet', user:'', bool: false });
+					res.render('index', { title: 'DSL-Comet', user:'', connected: false });
 				}
 			} else {
 					console.log("OH NOoodoododod");
-				res.render('index', { title: 'DSL-Comet', user:'', bool: false });
+				res.render('index', { title: 'DSL-Comet', user:'', connected: false });
 			}
 		} catch (err) {
 			util.sendJsonError(res, {code:300, msg:err});
@@ -40,7 +40,7 @@ module.exports = {
 		try {
 			Session.updateOne(req.session, { status: 'expired' });
 			res.clearCookie('token');
-			res.render('index', { title: 'DSL-Comet', user:'', bool:false });
+			res.render('index', { title: 'DSL-Comet', user:'', connected:false });
 		} catch (err) {
 	    res.status(401).json({
 	      errors: [

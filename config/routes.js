@@ -33,12 +33,12 @@ module.exports = function(app){
   signupRouter.get('/', signup.displayForm);
   signupRouter.post('/register', signup.register);
   signupRouter.post('/registerApp', signup.registerApp);
-  palettesRouter.get('/', palettes.showPalettesList);
+  palettesRouter.get('/', authenticate, palettes.showPalettesList);
   palettesRouter.post('/', palettes.addNewPalette);
   palettesRouter.get('/:pname', palettes.getPalette);
   palettesRouter.post('/:pname/delete', palettes.removePalette);
   palettesRouter.put('/:pname', palettes.updatePalette);
-  ecoresRouter.get('/', ecores.showEcoreList);
+  ecoresRouter.get('/', authenticate, ecores.showEcoreList);
   ecoresRouter.post('/', ecores.addEcore);
   ecoresRouter.get('/:ename', ecores.getEcore);
   ecoresRouter.post('/:ename/delete', ecores.removeEcore);
