@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form(method="POST", action="/signup/register")
+  form(method="POST", action="/signup")
     input(type="hidden", name="_method", value="PUT")
     p Name: 
       input(type="text", name="name")

@@ -17,6 +17,12 @@ mixin nav(name, id, style)
 mixin nav_item(href, active)
     li(class=active): a( href=href )
         block
+        
+mixin nav_button(href, active)
+    li(class=active) 
+      form( action=href method="post")
+        button( type="submit")
+          block
  
 mixin nav_item_dropdown(href, active)
     li(class=["dropdown", active])
