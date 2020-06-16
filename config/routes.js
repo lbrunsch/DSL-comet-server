@@ -26,7 +26,8 @@ module.exports = function(app){
   app.use('/jsons', jsonRouter);
   app.use('/diagrams', diagramsRouter);
 
-  app.get('/', authenticate,  main.index);
+  //app.get('/', authenticate,  main.index);
+  app.get('/', main.index);
   signinRouter.get('/', signin.displayForm);
   signinRouter.post('/login', signin.login);
   signinRouter.post('/loginApp', signin.loginApp);

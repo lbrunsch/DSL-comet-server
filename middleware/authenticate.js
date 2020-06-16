@@ -1,29 +1,19 @@
 const Session = require('../models/session');
+const jwt = require('jsonwebtoken');
 
 const authenticate = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
-    console.log('cookie: '+ res.cookies);
-    if (!token || typeof token !== 'string') {
-      console.log('Request cookie is invalid.');
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const userId = decodedToken.userId;
+    if (req.body.userId && req.body.userId !== userId) {
+      throw 'Invalid user ID';
     } else {
-      const session = await Session.findOne({ token, status: 'valid' });
-      if(!session) {
-        res.clearCookie('token');
-        console.log('Your session has expired. You need to log in.');
-      }
-      req.session = session;
+      next();
     }
-    next();
-  } catch (err) {
+  } catch {
     res.status(401).json({
-      errors: [
-        {
-          title: 'Unauthorized',
-          detail: 'Authentication credentials invalid',
-          errorMessage: err.message,
-        },
-      ],
+      error: new Error('Invalid request!')
     });
   }
 };
