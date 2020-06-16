@@ -1,5 +1,5 @@
 var express = require('express');
-const { authenticate } = require('../middleware/authenticate');
+const authenticate = require('../middleware/authenticate');
 
 module.exports = function(app){
 
@@ -18,6 +18,12 @@ module.exports = function(app){
   var ecoresRouter = express.Router();
   var jsonRouter = express.Router();
   var diagramsRouter = express.Router();
+
+  app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    //res.locals.csrfToken = req.csrfToken();
+    next();
+  });
 
   app.use('/signin', signinRouter);
   app.use('/signup', signupRouter);

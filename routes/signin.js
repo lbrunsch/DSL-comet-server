@@ -10,7 +10,11 @@ const User = require('../models/user');
 //const Session = require('../models/session');
 
 exports.displayForm = (req, res, next) => {
-  res.render('signin', { title: 'DSL-Comet::Sign In' });
+  //res.render('signin', { title: 'DSL-Comet::Sign In' });
+  res.render('signin', {
+    //path: '/login',
+    title: 'DSL-Comet::Sign In',
+  })
 };
 
 exports.login = (req, res) => {
@@ -19,25 +23,36 @@ exports.login = (req, res) => {
   User.findOne({user:req.body.username})
   .then(user => {
     if(!user) {
-      return res.status(401).json({ error: 'User not found!' });
+      //return res.status(401).json({ error: 'User not found!' });
+      return res.redirect('/signin');
     }
     bcrypt.compare(req.body.password, user.password)
       .then(valid =>{
         if(!valid) {
-          return res.status(401).json({ error: 'Password is not correct!' });
+          //return res.status(401).json({ error: 'Password is not correct!' });
+          res.redirect('/login');
         }
-        console.log("User logged in properly: "+ user);
-        res.status(200).json({
-          userId: user._id,
-          token: jwt.sign(
-            { userId: user._id },
-            'RANDOM_TOKEN_SECRET',
-            { expiresIn: '24h' }
-          )
-        });
-        res.redirect('index', { title: 'DSL-Comet', user:user.user, connected:true });
-      }).catch(error => res.status(500).json({ error }));
-  }).catch(error => res.status(500).json({ error }));
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        return req.session.save(err => {
+          console.log(err);
+          res.redirect('/');
+        })
+        // console.log("User logged in properly: "+ user);
+        // res.status(200).json({
+        //   userId: user._id,
+        //   token: jwt.sign(
+        //     { userId: user._id },
+        //     'RANDOM_TOKEN_SECRET',
+        //     { expiresIn: '24h' }
+        //   )
+        // });
+        //res.render('index', { title: 'DSL-Comet', user:user.user, connected:true });
+      }).catch(error => {
+        console.log(err);
+        res.redirect('/login');
+      });
+  }).catch(error => console.log(err));
 };
 
 exports.loginApp = async (req, res) => {

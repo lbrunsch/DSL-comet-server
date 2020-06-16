@@ -15,7 +15,7 @@ html( lang="en" )
         
         +nav("DSL-Comet", "dropdown_menu")
             +nav_item( "/" ) Home
-            if connected
+            if isAuthenticated
               +nav_item_dropdown( "#" )( label="Artefacts")
                 +nav_item( "/ecores" ) Ecores
                 +nav_item( "/palettes" ) Palettes

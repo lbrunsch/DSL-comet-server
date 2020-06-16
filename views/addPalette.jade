@@ -3,7 +3,7 @@ extends layout
 link(rel='stylesheet', href='/style.css', type="text/css")
 
 block content
-	if connected
+	if isAuthenticated
 		h1 Add palette
 
 		.submit-form

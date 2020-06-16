@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 module.exports = function(app, envConfig){
     // view engine setup
@@ -17,4 +19,20 @@ module.exports = function(app, envConfig){
     app.use(cookieParser());
     // telling Express to serve static objects from the /public/ dir, but make it seem like the top level
     app.use(express.static(path.join(envConfig.rootPath, 'public')));
+
+    const store = new MongoDBStore({
+      uri: envConfig.database,
+      collection: 'sessions'
+    })
+
+    app.use(
+    session({
+      secret: 'my secret',
+      resave: false,
+      saveUninitialized: false,
+      store: store
+    })
+  );
+
+  
 };

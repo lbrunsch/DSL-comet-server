@@ -15,17 +15,35 @@ exports.displayForm = (req, res, next) => {
 exports.register = async (req, res) => {
   console.log("POST /register");
   console.log(req.body);
-  const user = new User({
-    name: req.body.name,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    user: req.body.username,
-    password: req.body.password,
-    role: 'editor'
-  });
-  user.save()
-    .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-    .catch(error => res.status(400).json({ error }));
+  // const user = new User({
+  //   name: req.body.name,
+  //   lastname: req.body.lastname,
+  //   email: req.body.email,
+  //   user: req.body.username,
+  //   password: req.body.password,
+  //   role: 'editor'
+  // });
+  User.findOne({ user: req.body.username })
+    .then(userExist => {
+      if (userExist) {
+        return res.redirect('/signup');
+      }
+      const user = new User({
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        user: req.body.username,
+        password: req.body.password,
+        role: 'editor'
+      });
+      user.save();
+      res.redirect('/signin');
+    }).catch(err => {
+      console.log(err);
+    });
+  // user.save()
+  //   .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+  //   .catch(error => res.status(400).json({ error }));
   //res.render('index', { title: 'DSL-Comet', user:newUser.user, connected:true });
 };
 
