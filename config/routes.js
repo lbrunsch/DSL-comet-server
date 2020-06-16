@@ -22,7 +22,10 @@ module.exports = function(app){
   var diagramsRouter = express.Router();
 
   app.use((req, res, next) => {
+    const username = req.session.username;
     res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.username = username;
+    console.log(req.session.username);
     //res.locals.csrfToken = req.csrfToken();
     next();
   });
