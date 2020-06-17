@@ -23,7 +23,7 @@ const router = express.Router();
 
 module.exports = function(app){
 
-
+  app.use(router);
   router.post('/register', authController.post_RegisterApp);
 
   app.use((req, res, next) => {
