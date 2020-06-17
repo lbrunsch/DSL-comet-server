@@ -6,15 +6,20 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const cors = require('cors');
 
 module.exports = function(app, envConfig){
 
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(cors());
+  
   const csrfProtection = csrf();
   // view engine setup
   app.set('views', path.join(envConfig.rootPath, 'views'));

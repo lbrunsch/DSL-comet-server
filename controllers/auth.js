@@ -90,7 +90,7 @@ exports.post_RegisterApp = async (req, res) => {
     var email = req.body.email;
     var username = req.body.username;
     var password = req.body.password;
-    if(req.body.role != null) {
+    if(req.body.role !== 'undefined') {
       var role = req.body.role;
     } else {
       var role = "editor";
@@ -144,6 +144,7 @@ exports.post_SignIn = (req, res, next) => {
         }
         req.session.isLoggedIn = true;
         req.session.user = user;
+        req.session.userRole = user.role;
         req.session.username = req.body.username;
         return req.session.save(err => {
           console.log(err);
