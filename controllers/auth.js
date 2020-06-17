@@ -82,7 +82,7 @@ exports.post_SignUp = (req, res, next) => {
 };
 
 exports.post_RegisterApp = (req, res, next) => {
-  console.log("POST /signup");
+  console.log("POST /register App");
   console.log(req.body);
   const email = req.body.email;
   const password = req.body.password;
@@ -195,7 +195,7 @@ exports.post_SignIn = (req, res, next) => {
 };
 
 exports.post_LoginApp = (req, res, next) => {
-  console.log("POST /signin");
+  console.log("POST /login App");
   console.log(req.body);
   User.findOne({user:req.body.username})
   .then(user => {
