@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  if errorMessage
+    div(class="user-message user-message--error") #{errorMessage}
+  form(method="POST", action="/signup")
+    input(type="hidden", name="_method", value="PUT")
+    //- p Name: 
+    //-   input(type="text", name="name")
+    //- p Last Name: 
+    //-   input(type="text", name="lastname")
+    p E-mail: 
+      input(type="email", name="email")
+    p Username: 
+      input(type="text", name="username")
+    p Password: 
+      input(type="text", name="password")
+    p
+      input(type="hidden", name="_csrf" value= csrfToken)
+    p 
+      input(type="submit")

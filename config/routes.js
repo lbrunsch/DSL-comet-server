@@ -1,71 +1,53 @@
+//========================================================
+//================     ROUTES     ========================
+//========================================================
+
 var express = require('express');
+const csrf = require('csurf');
+const flash = require('connect-flash');
+
 const authenticate = require('../middleware/is-auth');
 const errorController = require('../controllers/error');
+const indexController = require('../controllers/index');
+
+const authRoutes = require('../routes/auth');
+const palettesRoutes = require('../routes/palettes');
+const ecoresRoutes = require('../routes/ecores');
+const jsonRoutes = require('../routes/json');
+const diagramsRoutes = require('../routes/diagrams');
+
+const User = require('../models/user');
 
 module.exports = function(app){
 
-  var main = require('../routes/main');
-  //var usersRouter = require('../routes/users');
-  //var signin = require('../routes/signin');
-  //var signup = require('../routes/signup');
-  const auth = require('../routes/auth')
-  var palettes = require('../routes/palettes');
-  var ecores = require('../routes/ecores');
-  var json = require('../routes/json');
-  var diagrams = require('../routes/diagrams');
-
-  //var signinRouter = express.Router();
-  //var signupRouter = express.Router();
-  //var palettesRouter = express.Router();
-  //var ecoresRouter = express.Router();
-  var jsonRouter = express.Router();
-  var diagramsRouter = express.Router();
+  app.use((req, res, next) => {
+    if (!req.session.user) {
+      return next();
+    }
+    User.findById(req.session.user._id)
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
+  });
 
   app.use((req, res, next) => {
     const username = req.session.username;
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.username = username;
-    console.log(req.session.username);
-    //res.locals.csrfToken = req.csrfToken();
+    res.locals.csrfToken = req.csrfToken();
     next();
   });
 
-  //app.use('/signin', signinRouter);
-  //app.use('/signup', signupRouter);
-  app.use('/', auth);
-  app.use('/', palettes);
-  app.use('/', ecores);
-  app.use('/jsons', jsonRouter);
-  app.use('/diagrams', diagramsRouter);
-
-  //app.get('/', authenticate,  main.index);
-  app.get('/', main.index);
-  // signinRouter.get('/', signin.displayForm);
-  // signinRouter.post('/login', signin.login);
-  // signinRouter.post('/loginApp', signin.loginApp);
-  // signupRouter.get('/', signup.displayForm);
-  // signupRouter.post('/register', signup.register);
-  // signupRouter.post('/registerApp', signup.registerApp);
-  // palettesRouter.get('/', authenticate, palettes.showPalettesList);
-  // palettesRouter.post('/', palettes.addNewPalette);
-  // palettesRouter.get('/:pname', palettes.getPalette);
-  // palettesRouter.post('/:pname/delete', palettes.removePalette);
-  // palettesRouter.put('/:pname', palettes.updatePalette);
-  // ecoresRouter.get('/', authenticate, ecores.showEcoreList);
-  // ecoresRouter.post('/', ecores.addEcore);
-  // ecoresRouter.get('/:ename', ecores.getEcore);
-  // ecoresRouter.post('/:ename/delete', ecores.removeEcore);
-  jsonRouter.get('/', json.json);
-  jsonRouter.get('/:name', json.getJson);
-  app.get('/jsonbyuri', json.jsonByUri);
-  diagramsRouter.get('/', diagrams.showDiagramsList);
-  diagramsRouter.post('/', diagrams.addNewDiagram);
-  diagramsRouter.get('/:dname', diagrams.getDiagram);
-  diagramsRouter.get('/:dname/image', diagrams.getDiagramImage);
-  diagramsRouter.delete('/:dname', diagrams.removeDiagram);
-  diagramsRouter.put(':dname', diagrams.updateDiagram);
-  //app.get('/logout', authenticate,  main.logOut);
-
+  // main page
+  app.get('/', indexController.index);
+  // other routes
+  app.use(authRoutes);
+  app.use(palettesRoutes);
+  app.use(ecoresRoutes);
+  app.use(jsonRoutes);
+  app.use(diagramsRoutes);
   // catch 404 and forward to error handler
   app.use(errorController.get404);
 
@@ -77,6 +59,6 @@ module.exports = function(app){
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.render('errors/error');
   });
 };

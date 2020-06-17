@@ -1,8 +1,12 @@
+//========================================================
+//====================    Diagrams   =====================
+//========================================================
+
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var diagramSchema = new Schema({
-	name: {  
+	name: {
 		type:String,
 		required:true,
 		unique:true
@@ -25,4 +29,3 @@ var diagramSchema = new Schema({
 
 Diagram = mongoose.model("Diagram", diagramSchema);
 module.exports = Diagram;
-

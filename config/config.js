@@ -1,31 +1,39 @@
-var express = require('express');
-var logger = require('morgan');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var favicon = require('serve-favicon');
+//========================================================
+//================     CONFIG     ========================
+//========================================================
+
+const express = require('express');
+const logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+//const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 module.exports = function(app, envConfig){
-    // view engine setup
-    app.set('views', path.join(envConfig.rootPath, 'views'));
-    app.set('view engine', 'jade');
 
-    app.use(favicon(envConfig.rootPath + '/public/images/favicon.ico'));
-    app.use(logger('dev'));
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: false }));
-    app.use(cookieParser());
-    // telling Express to serve static objects from the /public/ dir, but make it seem like the top level
-    app.use(express.static(path.join(envConfig.rootPath, 'public')));
+  const csrfProtection = csrf();
+  // view engine setup
+  app.set('views', path.join(envConfig.rootPath, 'views'));
+  app.set('view engine', 'jade');
 
-    const store = new MongoDBStore({
-      uri: envConfig.database,
-      collection: 'sessions'
-    })
+  app.use(favicon(envConfig.rootPath + '/public/images/favicon.ico'));
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  // telling Express to serve static objects from the /public/ dir, but make it seem like the top level
+  app.use(express.static(path.join(envConfig.rootPath, 'public')));
 
-    app.use(
+  const store = new MongoDBStore({
+    uri: envConfig.database,
+    collection: 'sessions'
+  })
+
+  app.use(
     session({
       secret: 'my secret',
       resave: false,
@@ -33,6 +41,7 @@ module.exports = function(app, envConfig){
       store: store
     })
   );
+  app.use(csrfProtection);
+  app.use(flash());
 
-  
 };

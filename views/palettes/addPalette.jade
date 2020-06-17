@@ -1,0 +1,53 @@
+extends ../layout
+
+link(rel='stylesheet', href='/style.css', type="text/css")
+
+block content
+	if isAuthenticated
+		h1 Add palette
+
+		.submit-form
+			form#formUpdateFile(name="addPalete",method="post",action="/palettes")
+				.submit-label Name  
+				.submit-text-field
+				input#inputName(type="text", placeholder="name", name="name")
+				br
+
+				.submit-label Ecore URI (Required)  
+				.submit-text-field
+				input#inputName(type="text", placeholder="URI", name="ecoreURI")
+				br
+
+				.submit-label Extension  
+				.submit-text-field
+				input#inputName(type="text", placeholder="ext", name="extension")
+				br
+
+				.submit-text-area
+				textarea#text(name="content", cols="100", rows="20")
+				br
+				
+				input(type="hidden", name="_csrf" value= csrfToken)
+				
+				.submit-button
+				button#btnSubmit(type="submit") submit
+
+		br
+		br
+
+	.submit-form
+		h2 Stored palettes 
+
+		ul
+			each palette, i in palettelist
+				li
+					.item
+					a(href="/palettes/#{palette.name}") #{palette.name}
+
+		p
+		
+		br
+		br
+		br
+		
+		a(href="/") Back to index

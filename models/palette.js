@@ -1,8 +1,12 @@
+//========================================================
+//====================    Palettes   =====================
+//========================================================
+
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var paletteSchema = new Schema({
-	name: {  
+	name: {
 		type:String,
 		required:true,
 		unique:false
@@ -26,4 +30,3 @@ var paletteSchema = new Schema({
 
 Palette = mongoose.model("Palette", paletteSchema);
 module.exports = Palette;
-

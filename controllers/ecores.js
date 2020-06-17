@@ -100,31 +100,10 @@ module.exports = {
 					if(req.query.json ==="true"){
 	  				util.sendJsonResponse(res, ecores);
 	  			} else{
-	          if(req.session != null) {
-	            const { userId } = req.session;
-	    				if(userId) {
-	              const user = await User.findById({ _id: userId });
-	              res.render("ecoreList",{
-			  					ecorelist:ecores,
-									user: user.user,
-	                isAuthenticated: req.session.isLoggedIn
-	      				});
-	            } else {
-	              res.render("ecoreList",{
-			  					ecorelist:ecores,
-									user: '',
-	                isAuthenticated: req.session.isLoggedIn
-	      				});
-	            }
-	          } else {
-	            //Cargar la web
-	    				res.render("ecoreList",{
-		  					ecorelist:ecores,
-								user:'',
-	              isAuthenticated: req.session.isLoggedIn
-	    				});
-	          }
-	  			}
+          res.render("ecores/ecoreList",{
+            ecorelist:ecores
+	      	 });
+         }
 				}catch (err){
   				console.log("Error: "+err);
   			}
@@ -246,7 +225,7 @@ module.exports = {
 
   			}else{
   				if(ec != null){
-  					res.render("ecoreInfo",{
+  					res.render("ecores/ecoreInfo",{
   						name:ec.name,
   						content:ec.content
   					});

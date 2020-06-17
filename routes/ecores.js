@@ -1,3 +1,7 @@
+//========================================================
+//====================     eCores    =====================
+//========================================================
+
 const express = require('express');
 const ecoresController = require('../controllers/ecores');
 const router = express.Router();

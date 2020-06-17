@@ -5,7 +5,6 @@ var util = require('../config/util');
 
 const Palette = require('../models/palette');
 var User = require('../models/user');
-const Session = require('../models/session');
 
 module.exports = {
   get_ShowPalettesList: function(req, res){
@@ -20,32 +19,9 @@ module.exports = {
           if(req.query.json ==="true"){
     				util.sendJsonResponse(res, palettes);
     			}else{
-            if(req.session != null) {
-              const { userId } = req.session;
-              console.log("palette user id : "+ userId);
-      				if(userId) {
-                const user = await User.findById({ _id: userId });
-                console.log("palette "+ user);
-                res.render("addPalette",{
-        					palettelist:palettes,
-                  user: user.user,
-                  isAuthenticated: req.session.isLoggedIn
-        				});
-              } else {
-                res.render("addPalette",{
-        					palettelist:palettes,
-                  user: '',
-                  isAuthenticated: req.session.isLoggedIn
-        				});
-              }
-            } else {
-              //Cargar la web
-      				res.render("addPalette",{
-      					palettelist:palettes,
-                user: '',
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            }
+            res.render("palettes/addPalette",{
+              palettelist:palettes
+            });
     			}
         } catch {
           console.log("Error: "+err);
@@ -61,113 +37,9 @@ module.exports = {
   			if(req.query.json ==="true"){
   				util.sendJsonResponse(res, palettes);
   			}else{
-          if(req.session != null) {
-            const { userId } = req.session;
-    				if(userId) {
-              const user = User.findById({ _id: userId });
-              console.log("palette "+ user);
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: user.user,
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            } else {
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: '',
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            }
-          } else {
-            //Cargar la web
-    				res.render("addPalette",{
-    					palettelist:palettes,
-              user: '',
-              isAuthenticated: req.session.isLoggedIn
-    				});
-          }
-  			}
-  		});
-  	}
-  },
-  showPalettesListOld: function(req, res){
-  	console.log("GET /palettes");
-
-  	var version = req.query.version;
-
-  	if(version == null){ //Todos
-  		console.log("GET ALL, version == null");
-  		Palette.find({}, function(err, palettes){
-  			if(err){
-  				console.log("Error: "+err);
-  			}
-
-  			if(req.query.json ==="true"){
-  				util.sendJsonResponse(res, palettes);
-  			}else{
-          if(req.session != null) {
-            const { userId } = req.session;
-            console.log("palette user id : "+ userId);
-    				if(userId) {
-              const user = User.findById({ _id: userId });
-              console.log("palette "+ user);
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: user.user,
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            } else {
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: '',
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            }
-          } else {
-            //Cargar la web
-    				res.render("addPalette",{
-    					palettelist:palettes,
-              user: '',
-              isAuthenticated: req.session.isLoggedIn
-    				});
-          }
-  			}
-  		});
-  	}else{ //Recupero solo esos
-  		console.log("GET /version = "+version);
-  		Palette.find({"version" : version}, function(err, palettes){
-  			if(err){
-  				console.log("Error: "+err);
-  			}
-
-  			if(req.query.json ==="true"){
-  				util.sendJsonResponse(res, palettes);
-  			}else{
-          if(req.session != null) {
-            const { userId } = req.session;
-    				if(userId) {
-              const user = User.findById({ _id: userId });
-              console.log("palette "+ user);
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: user.user,
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            } else {
-              res.render("addPalette",{
-      					palettelist:palettes,
-                user: '',
-                isAuthenticated: req.session.isLoggedIn
-      				});
-            }
-          } else {
-            //Cargar la web
-    				res.render("addPalette",{
-    					palettelist:palettes,
-              user: '',
-              isAuthenticated: req.session.isLoggedIn
-    				});
-          }
+          res.render("palettes/addPalette",{
+            palettelist:palettes
+          });
   			}
   		});
   	}
@@ -240,7 +112,7 @@ module.exports = {
   			if(req.query.json === "true"){
   				util.sendJsonResponse(res, {code:200, body:palette});
   			}else{
-  				res.render("paletteInfo",{
+  				res.render("palettes/paletteInfo",{
   					name:palette.name,
   					content:palette.content
   				});

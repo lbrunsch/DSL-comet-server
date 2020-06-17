@@ -1,34 +1,81 @@
+//========================================================
+//====================    AUTH    ========================
+//========================================================
+
 const bcrypt = require('bcryptjs');
+
 var util = require('../config/util');
 
 var User = require('../models/user');
 
-//========================================================
+
 //====================    sign up    =====================
-//========================================================
 
 exports.get_SignUp = (req, res, next) => {
-  res.render('signup', { title: 'DSL-Comet::Sign Up' });
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('auth/signup', {
+    title: 'DSL-Comet::Sign Up',
+    errorMessage: message
+  });
 };
 
 exports.post_SignUp = (req, res, next) => {
   console.log("POST /signup");
   console.log(req.body);
-  User.findOne({ user: req.body.username })
+  const email = req.body.email;
+  const password = req.body.password;
+  const username = req.body.username;
+  // const name = req.body.name;
+  // if(name === 'undefined') {
+  //   name ='';
+  // }
+  // const lastname = req.body.lastname;
+  // if(lastname === 'undefined') {
+  //   lastname ='';
+  // }
+
+  User.findOne({ user: username })
     .then(userExist => {
       if (userExist) {
+        req.flash('error', 'Username exists already, please pick a different one.');
         return res.redirect('/signup');
       }
-      const user = new User({
-        name: req.body.name,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        user: req.body.username,
-        password: req.body.password,
-        role: 'editor'
-      });
-      user.save();
-      res.redirect('/signin');
+      if (username === 'undefined' || username === '') {
+        req.flash('error', 'You have to set a username.');
+        return res.redirect('/signup');
+      }
+      User.findOne({ email: email })
+        .then(emailExist => {
+          if (emailExist) {
+            req.flash('error', 'E-Mail exists already, please pick a different one.');
+            return res.redirect('/signup');
+          }
+          if (email === 'undefined' || email === '') {
+            req.flash('error', 'You have to set an email.');
+            return res.redirect('/signup');
+          }
+          if(password === 'undefined' || password === '') {
+            req.flash('error', 'You have to set a password.');
+            return res.redirect('/signup');
+          }
+          const user = new User({
+            name: " ",
+            lastname: " ",
+            email: email,
+            user: username,
+            password: password,
+            role: 'editor'
+          });
+          user.save();
+          res.redirect('/signin');
+        }).catch(err => {
+          console.log(err);
+        })
     }).catch(err => {
       console.log(err);
     });
@@ -65,14 +112,19 @@ exports.post_RegisterApp = async (req, res) => {
 
 };
 
-//========================================================
 //====================    sign in    =====================
-//========================================================
 
 exports.get_SignIn = (req, res, next) => {
-  res.render('signin', {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('auth/signin', {
     //path: '/login',
     title: 'DSL-Comet::Sign In',
+    errorMessage: message
   })
 };
 
@@ -82,6 +134,7 @@ exports.post_SignIn = (req, res, next) => {
   User.findOne({user:req.body.username})
   .then(user => {
     if(!user) {
+      req.flash('error', 'Invalid username or password.');
       return res.redirect('/signin');
     }
     bcrypt.compare(req.body.password, user.password)
@@ -98,6 +151,7 @@ exports.post_SignIn = (req, res, next) => {
         })
       }).catch(error => {
         console.log(err);
+        req.flash('error', 'Invalid username or password.');
         res.redirect('/signin');
       });
   }).catch(error => console.log(err));
@@ -126,9 +180,7 @@ exports.post_LoginApp = async (req, res) => {
   }
 };
 
-//========================================================
 //====================    log out    =====================
-//========================================================
 
 exports.post_Logout = (req, res, next) => {
   req.session.destroy(err => {

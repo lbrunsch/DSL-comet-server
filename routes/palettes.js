@@ -1,3 +1,7 @@
+//========================================================
+//====================    Palettes   =====================
+//========================================================
+
 const express = require('express');
 const palettesController = require('../controllers/palettes');
 const router = express.Router();

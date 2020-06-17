@@ -1,8 +1,12 @@
+//========================================================
+//=======================    JSON    =====================
+//========================================================
+
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var jsonSchema = new Schema({
-	name: {  
+	name: {
 		type:String,
 		required:true
 	},
@@ -20,4 +24,3 @@ var jsonSchema = new Schema({
 
 Json = mongoose.model("Json", jsonSchema);
 module.exports = Json;
-

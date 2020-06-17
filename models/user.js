@@ -1,3 +1,7 @@
+//========================================================
+//========================    User   =====================
+//========================================================
+
 var mongoose = require("mongoose");
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcryptjs');
