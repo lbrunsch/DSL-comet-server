@@ -90,11 +90,7 @@ exports.post_RegisterApp = async (req, res) => {
     var email = req.body.email;
     var username = req.body.username;
     var password = req.body.password;
-    if(req.body.role !== 'undefined') {
-      var role = req.body.role;
-    } else {
-      var role = "editor";
-    }
+    var role = req.body.role;
 
     var newUser = User({
       name: name,
