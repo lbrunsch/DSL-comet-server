@@ -18,13 +18,7 @@ const diagramsRoutes = require('../routes/diagrams');
 
 const User = require('../models/user');
 
-const authController = require('../controllers/auth');
-const router = express.Router();
-
 module.exports = function(app){
-
-  app.use(router);
-  router.post('/register', authController.post_RegisterApp);
 
   app.use((req, res, next) => {
     if (!req.session.user) {

@@ -9,7 +9,7 @@ const router = express.Router();
 
 const isAuth = require('../middleware/is-auth');
 
-router.get('/palettes', is_authorized('editor'), palettesController.get_ShowPalettesList);
+router.get('/palettes', palettesController.get_ShowPalettesList);
 router.post('/palettes', palettesController.post_AddPalette);
 router.get('/palettes/:pname', palettesController.get_Palette);
 router.post('/palettes/:pname/delete', palettesController.post_RemovePalette);
