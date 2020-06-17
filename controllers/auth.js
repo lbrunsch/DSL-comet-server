@@ -81,7 +81,47 @@ exports.post_SignUp = (req, res, next) => {
     });
 };
 
-exports.post_RegisterApp = async (req, res) => {
+exports.post_RegisterApp = (req, res, next) => {
+  console.log("POST /signup");
+  console.log(req.body);
+  const email = req.body.email;
+  const password = req.body.password;
+  const username = req.body.username;
+  const name = req.body.name;
+  const lastname = req.body.lastname;
+  const role = req.body.role;
+
+  User.findOne({ user: username })
+    .then(userExist => {
+      if (userExist) {
+        util.sendJsonError(res, {code:300, msg:err});
+      }
+      User.findOne({ email: email })
+        .then(emailExist => {
+          if (emailExist) {
+            util.sendJsonError(res, {code:300, msg:err});
+          }
+          const user = new User({
+            name: name,
+            lastname: lastname,
+            email: email,
+            user: username,
+            password: password,
+            role: role
+          });
+          user.save();
+          util.sendJsonResponse(res, {code:200, msg:"User added properly"});
+        }).catch(err => {
+          console.log(err);
+          util.sendJsonError(res, {code:300, msg:err});
+        })
+    }).catch(err => {
+      console.log(err);
+      util.sendJsonError(res, {code:300, msg:err});
+    });
+};
+
+exports.post_RegisterAppOld = async (req, res) => {
   console.log("POST /register");
   console.log(req.body);
   try {
@@ -146,15 +186,43 @@ exports.post_SignIn = (req, res, next) => {
           console.log(err);
           res.redirect('/');
         })
-      }).catch(error => {
+      }).catch(err => {
         console.log(err);
         req.flash('error', 'Invalid username or password.');
         res.redirect('/signin');
       });
-  }).catch(error => console.log(err));
+  }).catch(err => console.log(err));
 };
 
-exports.post_LoginApp = async (req, res) => {
+exports.post_LoginApp = (req, res, next) => {
+  console.log("POST /signin");
+  console.log(req.body);
+  User.findOne({user:req.body.username})
+  .then(user => {
+    if(!user) {
+      util.sendJsonError(res, {code:300, msg:err});
+    }
+    bcrypt.compare(req.body.password, user.password)
+      .then(valid =>{
+        if(!valid) {
+          util.sendJsonError(res, {code:300, msg:err});
+        }
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        req.session.userRole = user.role;
+        req.session.username = req.body.username;
+        return req.session.save(err => {
+          console.log(err);
+          util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
+        })
+      }).catch(err => {
+        console.log(err);
+        util.sendJsonError(res, {code:300, msg:err});
+      });
+  }).catch(err => util.sendJsonError(res, {code:300, msg:err}););
+};
+
+exports.post_LoginAppOld = async (req, res) => {
   console.log("POST /login");
   console.log(req.body.username);
   try {
