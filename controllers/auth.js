@@ -219,7 +219,9 @@ exports.post_LoginApp = (req, res, next) => {
         console.log(err);
         util.sendJsonError(res, {code:300, msg:err});
       });
-  }).catch(err => util.sendJsonError(res, {code:300, msg:err}););
+  }).catch(err => {
+    util.sendJsonError(res, {code:300, msg:err});
+  });
 };
 
 exports.post_LoginAppOld = async (req, res) => {
