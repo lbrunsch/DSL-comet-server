@@ -81,7 +81,7 @@ exports.post_SignUp = (req, res, next) => {
     });
 };
 
-exports.post_RegisterApp = (req, res, next) => {
+exports.post_RegisterApp = (req, res) => {
   console.log("POST /register App");
   console.log(req.body);
   const email = req.body.email;
@@ -196,7 +196,7 @@ exports.post_SignIn = (req, res, next) => {
   }).catch(err => console.log(err));
 };
 
-exports.post_LoginApp = (req, res, next) => {
+exports.post_LoginApp = (req, res) => {
   console.log("POST /login App");
   console.log(req.body);
   User.findOne({user:req.body.username})
