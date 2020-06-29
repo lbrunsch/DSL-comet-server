@@ -18,8 +18,8 @@ module.exports = function(app, envConfig){
 
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
-  app.use(cors());
-  
+  //app.use(cors());
+
   const csrfProtection = csrf();
   // view engine setup
   app.set('views', path.join(envConfig.rootPath, 'views'));
