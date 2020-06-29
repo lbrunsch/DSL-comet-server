@@ -1,8 +1,8 @@
 const express = require('express');
-const creatorController = require('../controllers/creator');
+const dashboardController = require('../controllers/dashboard');
 const is_authorized = require('../middleware/is-authorized');
 const router = express.Router();
 
-router.get('/creator', is_authorized('creator'), creatorController.creator);
+router.get('/dashboard', is_authorized('dashboard'), dashboardController.dashboard);
 
 module.exports = router;

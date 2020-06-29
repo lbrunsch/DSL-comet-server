@@ -15,7 +15,7 @@ const palettesRoutes = require('../routes/palettes');
 const ecoresRoutes = require('../routes/ecores');
 const jsonRoutes = require('../routes/json');
 const diagramsRoutes = require('../routes/diagrams');
-const creatorRoutes = require('../routes/creator');
+const dashboardRoutes = require('../routes/dashboard');
 
 const User = require('../models/user');
 
@@ -39,6 +39,7 @@ module.exports = function(app){
     const username = req.session.username;
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.username = username;
+    res.locals.roleOnWeb = req.sessions.roleOnWeb;
     //res.locals.csrfToken = req.csrfToken();
     next();
   });
@@ -52,7 +53,7 @@ module.exports = function(app){
   app.use(jsonRoutes);
   app.use(diagramsRoutes);
   // Creator
-  app.use(creatorRoutes);
+  app.use(dashboardRoutes);
   // catch 404 and forward to error handler
   app.use(errorController.get404);
 

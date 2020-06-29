@@ -42,6 +42,11 @@ var UserSchema = new Schema({
 		required:true,
 		unique:false
 	},
+  roleOnWeb: {
+		type:String,
+		required:true,
+		unique:false
+	},
 	roles: [
       {
         type: mongoose.Schema.Types.ObjectId,

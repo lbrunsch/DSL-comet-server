@@ -117,6 +117,10 @@ module.exports = {
   	var name = req.body.name;
   	var content = req.body.content;
   	var uri = req.body.uri;
+		var author = "MisoAdmin"
+		if(res.locals.username) {
+			author = res.locals.username;
+		}
 
   	console.log("-----");
   	console.log(req.body);
@@ -124,6 +128,8 @@ module.exports = {
   	console.log("name: " + name);
   	console.log("content: " + content);
   	console.log("uri " + uri);
+  	console.log("-----");
+		console.log("author " + author);
   	console.log("-----");
 
   	var autogenerateGrapicRStr = req.body.autogenerate;
@@ -145,7 +151,8 @@ module.exports = {
   		var newEcore= Ecore({
   			name: name.replace(/\s+/g, ''),
   			content: content,
-  			URI: uri
+  			URI: uri,
+				author: author
   		});
 
   		console.log("newEcore:\n");

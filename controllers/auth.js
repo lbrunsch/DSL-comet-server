@@ -69,7 +69,8 @@ exports.post_SignUp = (req, res, next) => {
             email: email,
             user: username,
             password: password,
-            role: 'editor'
+            role: 'editor',
+            roleOnWeb: 'author'
           });
           user.save();
           res.redirect('/signin');
@@ -107,7 +108,8 @@ exports.post_RegisterApp = (req, res) => {
               email: email,
               user: username,
               password: password,
-              role: role
+              role: role,
+              roleOnWeb: 'author'
             });
             user.save();
             util.sendJsonResponse(res, {code:200, msg:"User added properly"});
@@ -139,7 +141,8 @@ exports.post_RegisterAppOld = async (req, res) => {
       email: email,
       user: username,
       password:password,
-      role: role
+      role: role,
+      roleOnWeb: 'author'
     });
     const persistedUser = await newUser.save();
     util.sendJsonResponse(res, {code:200, msg:"User added properly"});
@@ -183,6 +186,7 @@ exports.post_SignIn = (req, res, next) => {
           req.session.user = user;
           req.session.userRole = user.role;
           req.session.username = req.body.username;
+          req.session.roleOnWeb = user.roleOnWeb;
           return req.session.save(err => {
             console.log(err);
             res.redirect('/');
@@ -213,6 +217,7 @@ exports.post_LoginApp = (req, res) => {
           req.session.user = user;
           req.session.userRole = user.role;
           req.session.username = req.body.username;
+          req.sessions.roleOnWeb = user.roleOnWeb;
           return req.session.save(err => {
             console.log(err);
             util.sendJsonResponse(res, {code:200, msg:"User logged in properly"});
