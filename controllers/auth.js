@@ -166,7 +166,7 @@ exports.get_SignIn = (req, res, next) => {
 };
 
 exports.post_SignIn = (req, res, next) => {
-  console.log("POST /signin");
+  console.log("POST /signin ww");
   console.log(req.body);
   User.findOne({user:req.body.username})
   .then(user => {
