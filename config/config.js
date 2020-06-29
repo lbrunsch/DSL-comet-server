@@ -46,7 +46,7 @@ module.exports = function(app, envConfig){
       store: store
     })
   );
-  app.use(csrfProtection);
+  //app.use(csrfProtection);
   app.use(flash());
 
 };
