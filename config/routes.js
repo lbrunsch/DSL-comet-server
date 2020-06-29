@@ -34,14 +34,14 @@ module.exports = function(app){
       .catch(err => console.log(err));
   });
 
-  // app.use((req, res, next) => {
-  //   console.log('apptest 2');
-  //   const username = req.session.username;
-  //   res.locals.isAuthenticated = req.session.isLoggedIn;
-  //   res.locals.username = username;
-  //   res.locals.csrfToken = req.csrfToken();
-  //   next();
-  // });
+  app.use((req, res, next) => {
+    console.log('apptest 2');
+    const username = req.session.username;
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.username = username;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+  });
 
   // main page
   app.get('/', indexController.index);
