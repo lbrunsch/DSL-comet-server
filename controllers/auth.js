@@ -175,17 +175,21 @@ exports.post_SignIn = (req, res, next) => {
     }
     bcrypt.compare(req.body.password, user.password)
       .then(valid =>{
+        console.log("j'compare");
         if(!valid) {
+          console.log("c t nul");
           res.redirect('/signin');
+        } else {
+          console.log("c t bien");
+          req.session.isLoggedIn = true;
+          req.session.user = user;
+          req.session.userRole = user.role;
+          req.session.username = req.body.username;
+          return req.session.save(err => {
+            console.log(err);
+            res.redirect('/');
+          })
         }
-        req.session.isLoggedIn = true;
-        req.session.user = user;
-        req.session.userRole = user.role;
-        req.session.username = req.body.username;
-        return req.session.save(err => {
-          console.log(err);
-          res.redirect('/');
-        })
       }).catch(err => {
         console.log(err);
         req.flash('error', 'Invalid username or password.');

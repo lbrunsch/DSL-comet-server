@@ -15,6 +15,7 @@ const palettesRoutes = require('../routes/palettes');
 const ecoresRoutes = require('../routes/ecores');
 const jsonRoutes = require('../routes/json');
 const diagramsRoutes = require('../routes/diagrams');
+const creatorRoutes = require('../routes/creator');
 
 const User = require('../models/user');
 
@@ -50,6 +51,8 @@ module.exports = function(app){
   app.use(ecoresRoutes);
   app.use(jsonRoutes);
   app.use(diagramsRoutes);
+  // Creator
+  app.use(creatorRoutes);
   // catch 404 and forward to error handler
   app.use(errorController.get404);
 
