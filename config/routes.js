@@ -21,27 +21,27 @@ const User = require('../models/user');
 
 module.exports = function(app){
 
-  app.use((req, res, next) => {
-    console.log('apptest 1');
-    if (!req.session.user) {
-      return next();
-    }
-    User.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  });
-
-  app.use((req, res, next) => {
-    console.log('apptest 2');
-    const username = req.session.username;
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.username = username;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   console.log('apptest 1');
+  //   if (!req.session.user) {
+  //     return next();
+  //   }
+  //   User.findById(req.session.user._id)
+  //     .then(user => {
+  //       req.user = user;
+  //       next();
+  //     })
+  //     .catch(err => console.log(err));
+  // });
+  //
+  // app.use((req, res, next) => {
+  //   console.log('apptest 2');
+  //   const username = req.session.username;
+  //   res.locals.isAuthenticated = req.session.isLoggedIn;
+  //   res.locals.username = username;
+  //   res.locals.csrfToken = req.csrfToken();
+  //   next();
+  // });
 
   // main page
   app.get('/', indexController.index);
