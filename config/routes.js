@@ -39,7 +39,7 @@ module.exports = function(app){
     const username = req.session.username;
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.username = username;
-    res.locals.csrfToken = req.csrfToken();
+    //res.locals.csrfToken = req.csrfToken();
     next();
   });
 
