@@ -28,12 +28,12 @@ function writeEcoreFileToFolder(ecore, uri){
 
 
 	fs.writeFile(name, ecore.content, function(err){
-		console.log("vengo de intentar escribir. Err: "+err);
+		console.log("I'm going to try to write. Err: "+err);
 		if(err){
-			console.log("Error escritura:  "+ err);
+			console.log("Error while writing:  "+ err);
 			//util.sendJsonError(res, {code:300, msg:"Error writing ecore file to folder"});
 		}else{
-			console.log("fichero ecore guardado correctamente");
+			console.log("Ecore file has been correctly saved.");
 
 			parseEcoreToJSON(ecore, uri);
 		}
@@ -42,7 +42,7 @@ function writeEcoreFileToFolder(ecore, uri){
 
 function parseEcoreToJSON (ecore, uri){
 
-	console.log("Voy a hacer el parsetojson");
+	console.log("Parse Ecore To JSON");
 
 	var sourceFile = __dirname +"/../tmp/"+ecore.name +".ecore";
 	var outFile = __dirname +"/../tmp/"+ecore.name +".json";
@@ -54,7 +54,7 @@ function parseEcoreToJSON (ecore, uri){
 		console.log("stdout: " + stdout);
 		console.log("stderr: " + stderr);
 		if(error){
-			console.log("Error de salida: " + error);
+			console.log("Error whne trying to create JSON: " + error);
 			//util.sendJsonError(res, {code:300, msg:"JSON JAR returned error " + error});
 		}else{
 			console.log("jsonFile created :D");
