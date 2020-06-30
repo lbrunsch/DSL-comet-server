@@ -6,7 +6,8 @@ var util = require('../config/util');
 var fs = require('fs');
 var childProcess = require('child_process');
 var mkdirp = require('mkdirp');
-var dir = './tmp';
+var dir = '../tmp';
+var path = require("path");
 
 if (!fs.existsSync(dir)){
 	console.log("Creo "+ dir);
@@ -19,17 +20,18 @@ var User = require('../models/user');
 
 function writeEcoreFileToFolder(ecore, uri){
 
-	var name = path.join(__dirname, "/tmp/"+ecore.name +".ecore");
+	var name = path.join(__dirname, "/../tmp/"+ecore.name +".ecore");
 
 	//var tempFilename = __dirname +"/files/ecores/"+ecore.name +".ecore";
 	console.log("ecore route: "+ name);
+	console.log("content " + ecore.content);
 
 
 	fs.writeFile(name, ecore.content, function(err){
 		console.log("vengo de intentar escribir. Err: "+err);
 		if(err){
 			console.log("Error escritura:  "+ err);
-			util.sendJsonError(res, {code:300, msg:"Error writing ecore file to folder"});
+			//util.sendJsonError(res, {code:300, msg:"Error writing ecore file to folder"});
 		}else{
 			console.log("fichero ecore guardado correctamente");
 
@@ -42,9 +44,10 @@ function parseEcoreToJSON (ecore, uri){
 
 	console.log("Voy a hacer el parsetojson");
 
-	var sourceFile = __dirname +"/tmp/"+ecore.name +".ecore";
-	var outFile = __dirname +"/tmp/"+ecore.name +".json";
-	var command = "java -jar exporter.jar "+sourceFile + " " + outFile;
+	var sourceFile = __dirname +"/../tmp/"+ecore.name +".ecore";
+	var outFile = __dirname +"/../tmp/"+ecore.name +".json";
+	var exporterJar = path.join(__dirname, "/../exporter.jar");
+	var command = "java -jar \""+exporterJar+"\" "+sourceFile + " " + outFile;
 	console.log("executing: "+command);
 
 	var cp = childProcess.exec(command , function(error, stdout, stderr){
@@ -52,7 +55,7 @@ function parseEcoreToJSON (ecore, uri){
 		console.log("stderr: " + stderr);
 		if(error){
 			console.log("Error de salida: " + error);
-			util.sendJsonError(res, {code:300, msg:"JSON JAR returned error " + error});
+			//util.sendJsonError(res, {code:300, msg:"JSON JAR returned error " + error});
 		}else{
 			console.log("jsonFile created :D");
 			//Recupero ese json y lo añado a mongodb

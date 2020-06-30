@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1 Dashboard
+    if roleOnWeb == 'admin'
+      p The admin dashboard
+    else
+      if roleOnWeb == 'author'
+        p Here you can manage your 
+  h2 coucou
+  ul(style="list-style: none;")
+    each ecore, i in ecorelist
+      li #{ecore.name}
+  p

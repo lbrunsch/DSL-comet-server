@@ -17,6 +17,9 @@ var ecoreSchema = new Schema({
 		type:String,
 		unique:true,
 		required:true
+	},
+	author: {
+		type:String
 	}
 });
 
