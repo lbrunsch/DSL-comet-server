@@ -69,7 +69,7 @@ function saveJSONtoMongodb(jsonfile, name, uri){
 		console.log("URI: " + uri);
 		fs.readFile(jsonfile, 'utf8', function (err,data) {
 		if (err) {
-			return console.log("Error leyendo el json" +err);
+			return console.log("Error while reading the JSON" +err);
 		}
 
 		var str = data;
@@ -82,9 +82,9 @@ function saveJSONtoMongodb(jsonfile, name, uri){
 
 		newJson.save(function(err){
 			if(err){
-				console.log("Error añadiendo el json a mongod: "+err);
+				console.log("Error when adding the json to mongodb: "+err);
 			}else{
-				console.log("JSON añadido a mongodb");
+				console.log("JSON has been added to mongodb");
 
 			}
 		});

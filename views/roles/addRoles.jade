@@ -1,0 +1,29 @@
+extends ../layout
+
+link(rel='stylesheet', href='/style.css', type="text/css")
+
+block content
+	if isAuthenticated
+		h1 Add role hiearchy
+
+		.submit-form
+			form#formUpdateFile(name="addRoles",method="post",action="/roles")
+				.submit-label Ecore URI (Required)  
+				.submit-text-field
+				input#inputName(type="text", placeholder="URI", name="ecoreURI")
+				br
+
+				.submit-label Extension  
+				.submit-text-field
+				input#inputName(type="text", placeholder="ext", name="extension")
+				br
+
+				.submit-text-area
+				textarea#text(name="content", cols="100", rows="20")
+				br
+				
+				.submit-button
+				button#btnSubmit(type="submit") submit
+
+		br
+		br

@@ -2,14 +2,26 @@
 //========================    Role   =====================
 //========================================================
 
-var mongoose = require("mongoose");
-
 const mongoose = require("mongoose");
 
 const Role = mongoose.model(
   "Role",
   new mongoose.Schema({
-    name: String
+    name: {
+      type:String,
+      unique:true
+    },
+    users: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
+    ecoreURI: {
+      type:String,
+  		required:true,
+  		unique:false
+    }
   })
 );
 

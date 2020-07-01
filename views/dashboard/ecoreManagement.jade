@@ -3,26 +3,36 @@ extends ../layout
 link(rel='stylesheet', href='/style.css', type="text/css")
 
 block content
-	.submit-form
-		block content2
-			h1 Ecore
-			br
-			.submit-label Name: #{name}
-			br
-			br
+	h2 #{name}
+	h3 Author: #{author}
 
-		//form#formRemoveEcore(name="removeEcore",method="post",action="/ecores/#{name}/delete")
-		//		.submit-button
-		//		button#btnSubmit(type="submit") Delete
+	//form#formRemoveEcore(name="removeEcore",method="post",action="/ecores/#{name}/delete")
+	//		.submit-button
+	//		button#btnSubmit(type="submit") Delete
 
 
-		.submit-text-area
+	.submit-text-area
 		textarea#text(name="content2", cols="80", rows="20", disabled="disabled") #{content} 
 
+	br
+	if printPalette
+		hr
+		h2 Palettes associated (#{nbOfPalette})
+		each palette, i in paletteList
+			h3 #{palette.name}
+			.submit-text-area
+				textarea#text(name="palette2", cols="80", rows="20", disabled="disabled") #{palette.content} 
 		br
-		br
-		br
-
-		a(href="/dashboard") Back to ecores
-		br
-		a(href="/") Back to index
+	else
+		hr
+		a(href="/palettes") Add new palette
+	if printRole	
+		hr
+		h2 Role hiearchy associated
+		.submit-text-area
+		textarea#text(name="role1", cols="80", rows="20", disabled="disabled") #{hierarchy} 
+	else
+		hr
+		a(href="/roles") Add new role hierarchy
+	br
+	p

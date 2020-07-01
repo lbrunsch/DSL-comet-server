@@ -10,5 +10,6 @@ block content
   h2 coucou
   ul(style="list-style: none;")
     each ecore, i in ecorelist
-      li #{ecore.name}
+      li 
+        a(href="/dashboard/#{ecore.name}") #{ecore.name}
   p

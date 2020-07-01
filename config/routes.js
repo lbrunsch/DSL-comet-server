@@ -16,6 +16,7 @@ const ecoresRoutes = require('../routes/ecores');
 const jsonRoutes = require('../routes/json');
 const diagramsRoutes = require('../routes/diagrams');
 const dashboardRoutes = require('../routes/dashboard');
+const rolesRoutes = require('../routes/roles');
 
 const User = require('../models/user');
 
@@ -52,8 +53,8 @@ module.exports = function(app){
   app.use(ecoresRoutes);
   app.use(jsonRoutes);
   app.use(diagramsRoutes);
-  // Creator
   app.use(dashboardRoutes);
+  app.use(rolesRoutes);
   // catch 404 and forward to error handler
   app.use(errorController.get404);
 

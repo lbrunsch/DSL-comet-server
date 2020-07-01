@@ -46,13 +46,7 @@ var UserSchema = new Schema({
 		type:String,
 		required:true,
 		unique:false
-	},
-	roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
-    ]
+	}
 });
 
 //make sure the emails are uniqueValidator
