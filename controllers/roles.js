@@ -67,5 +67,25 @@ exports.post_AddRole= (req, res, next) => {
       });
     });
   }
+}
 
+exports.get_ManageRole= (req,res, next) => {
+  console.log("GET /roles/" + req.params.ename);
+
+  Ecore.findOne({name:req.params.ename}, function(err, ec){
+
+    if(err){
+      console.log(err);
+    }else{
+      if(ec != null){
+        //UserRoleDSL.findOne({ecoreURI:ec.URI}, async(err, hierarchy){
+
+          res.render("roles/manageRole",{
+            name:ec.name,
+            roles: hierarchy.roles
+          });
+        //});
+      }
+    }
+  });
 }

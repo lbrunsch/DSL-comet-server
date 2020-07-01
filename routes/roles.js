@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get('/roles', rolesController.get_ShowRole);
 router.post('/roles', rolesController.post_AddRole);
-router.get('/roles/:ename', rolesController.get_ManageRole);
+//router.get('/roles/:ename', rolesController.get_ManageRole);
 
 module.exports = router;
