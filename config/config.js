@@ -20,7 +20,8 @@ module.exports = function(app, envConfig){
   app.use(bodyParser.json());
   app.use(cors());
 
-  const csrfProtection = csrf();
+  //const csrfProtection = csrf();
+
   // view engine setup
   app.set('views', path.join(envConfig.rootPath, 'views'));
   app.set('view engine', 'jade');
@@ -35,7 +36,8 @@ module.exports = function(app, envConfig){
 
   const store = new MongoDBStore({
     uri: envConfig.database,
-    collection: 'sessions'
+    collection: 'sessions',
+    clear_interval: 10080
   })
 
   app.use(
@@ -43,6 +45,7 @@ module.exports = function(app, envConfig){
       secret: 'my secret',
       resave: false,
       saveUninitialized: false,
+      cookie: { maxAge: 24 * 60 * 60 },
       store: store
     })
   );

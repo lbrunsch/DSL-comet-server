@@ -13,8 +13,10 @@ block content
 
 	.submit-text-area
 		textarea#text(name="content2", cols="80", rows="20", disabled="disabled") #{content} 
-
-	br
+		br
+		form(method="POST" action="/dashboard/#{name}")
+			button(type="submit" formmethod="post" formaction="/dashboard/#{name}") Delete Ecore
+		br
 	if printPalette
 		hr
 		h2 Palettes associated (#{nbOfPalette})
@@ -22,6 +24,9 @@ block content
 			h3 #{palette.name}
 			.submit-text-area
 				textarea#text(name="palette2", cols="80", rows="20", disabled="disabled") #{palette.content} 
+		br
+		form(method="POST" action="/dashboard/#{name}/palettes")
+			button(type="submit" formmethod="post" formaction="/dashboard/#{name}/palettes") Delete all palettes
 		br
 	else
 		hr
@@ -31,6 +36,9 @@ block content
 		h2 Role hiearchy associated
 		.submit-text-area
 		textarea#text(name="role1", cols="80", rows="20", disabled="disabled") #{hierarchy} 
+		br
+		form(method="POST" action="/dashboard/#{name}/roles")
+			button(type="submit" formmethod="post" formaction="/dashboard/#{name}/roles") Delete Role
 	else
 		hr
 		a(href="/roles") Add new role hierarchy
