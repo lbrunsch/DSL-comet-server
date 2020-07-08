@@ -17,6 +17,7 @@ const Role = mongoose.model(
         ref: "User"
       }
     ],
+    usernames: [String],
     ecoreURI: {
       type:String,
   		required:true,

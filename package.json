@@ -20,6 +20,7 @@
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsdom": "^16.2.2",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongodb": "^3.5.8",
@@ -30,7 +31,9 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.1",
     "path": "^0.12.7",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "xml2js": "^0.4.23",
+    "xmldoc": "^1.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

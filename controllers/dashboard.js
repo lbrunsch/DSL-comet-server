@@ -225,3 +225,55 @@ exports.post_DeleteRoles = (req, res, next) => {
 		}
 	});
 }
+
+exports.post_ManageRoles = (req, res, next) => {
+	Ecore.findOne({name:req.params.ename}, function(err, ecore) {
+		if(err) console.log(err);
+		Role.find({ecoreURI: ecore.URI}, function(err, roles) {
+			if(err) console.log(err);
+			User.find({}, function(err, users) {
+				if(err) console.log(err);
+				res.render("roles/manageRole",{
+					ecoreName:ecore.name,
+					ecoreURI:ecore.URI,
+					roleList:roles,
+					users:users
+				});
+			});
+		});
+	});
+}
+
+async function lol(role, deletedUsers, addedUsers, ecoreURI, res) {
+	if (deletedUsers != null) {
+		await Role.findOneAndUpdate({ecoreURI:ecoreURI, name:role}, {$pullAll:{usernames:deletedUsers}});
+	}
+	if(addedUsers != null) {
+	 	await Role.findOneAndUpdate({ecoreURI:ecoreURI, name:role}, {$addToSet:{usernames:addedUsers}});
+	}
+	Ecore.findOne({URI:ecoreURI}, function(err, ecore) {
+		if(err) console.log(err);
+		Role.find({ecoreURI: ecore.URI}, function(err, roles) {
+			if(err) console.log(err);
+			User.find({}, function(err, users) {
+				if(err) console.log(err);
+				res.render("roles/manageRole",{
+					ecoreName:ecore.name,
+					ecoreURI:ecore.URI,
+					roleList:roles,
+					users:users
+				});
+			});
+		});
+	});
+}
+
+exports.post_modifyRoles = (req, res, next) => {
+	var role = req.body.role;
+	var deletedUsers = req.body.deletedUsers;
+	var addedUsers = req.body.addedUsers;
+	var ecoreURI = req.body.uri;
+	console.log("add " + addedUsers);
+	console.log("delete " + deletedUsers);
+	lol(role, deletedUsers, addedUsers, ecoreURI, res);
+}

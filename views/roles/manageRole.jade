@@ -1,0 +1,34 @@
+extends ../layout
+
+
+block content
+  h1 Hierarchy management of #{ecoreName}
+  ul(style="list-style: none;")
+    each roles, i in roleList
+      if roles.name != 'Guest'
+        li 
+          h3
+            b 
+              u #{roles.name}
+          each user, j in roles.usernames
+            !{user}
+            br
+          br
+          form(name="modifyRoles",method="POST",action="/dashboard/#{ecoreName}/hierarchy/update")
+            h4 
+              b Add new user(s)
+            select(name="addedUsers" size="6" multiple)
+              each user, k in users
+                option(value="#{user.user}") #{user.user}
+            br
+            h4 
+              b Remove user(s)
+            select(name="deletedUsers" size="6" multiple)
+              each user, k in roles.usernames
+                option(value="#{user}") #{user}
+            br
+            input(type="hidden" name="role" value="#{roles.name}")
+            input(type="hidden" name="uri" value="#{ecoreURI}")
+            button(type="submit") Submit
+      hr
+  p

@@ -3,11 +3,11 @@ extends ../layout
 block content
   h1 Dashboard
     if roleOnWeb == 'admin'
-      p The admin dashboard
+      p The admin dashboard gives access to all DSL even those he is not owning.
     else
       if roleOnWeb == 'author'
-        p Here you can manage your 
-  h2 coucou
+        p Here you can manage your own DSL.
+  h2 List of DSLs
   ul(style="list-style: none;")
     each ecore, i in ecorelist
       li 

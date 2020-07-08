@@ -37,8 +37,10 @@ block content
 		.submit-text-area
 		textarea#text(name="role1", cols="80", rows="20", disabled="disabled") #{hierarchy} 
 		br
+		form(method="POST" action="/dashboard/#{name}/hierarchy")
+			button(type="submit" formmethod="post" formaction="/dashboard/#{name}/hierarchy") Manage hierarchy
 		form(method="POST" action="/dashboard/#{name}/roles")
-			button(type="submit" formmethod="post" formaction="/dashboard/#{name}/roles") Delete Role
+			button(type="submit" formmethod="post" formaction="/dashboard/#{name}/roles") Delete hierarchy
 	else
 		hr
 		a(href="/roles") Add new role hierarchy
