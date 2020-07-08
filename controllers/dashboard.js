@@ -279,7 +279,9 @@ exports.post_modifyRoles = (req, res, next) => {
 }
 
 exports.post_app = (req, res) => {
-	var paletteName = req.body.role;
+	var paletteName = req.body.paletteName;
+	console.log("PAAAAALETTE ");
+	console.log(paletteName)
 	Palette.findOne({name:paletteName}, function(err, palette) {
 		Role.find({ecoreURI: palette.ecoreURI}, function(err, roles) {
 			util.sendJsonResponse(res, roles);
