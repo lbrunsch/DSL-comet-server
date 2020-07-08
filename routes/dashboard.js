@@ -10,7 +10,7 @@ router.post('/dashboard/:ename/palettes', dashboardController.post_DeletePalette
 router.post('/dashboard/:ename/roles', dashboardController.post_DeleteRoles);
 router.post('/dashboard/:ename/hierarchy', dashboardController.post_ManageRoles);
 router.post('/dashboard/:ename/hierarchy/update', dashboardController.post_modifyRoles);
-router.post('/dashboard/app', dashboardController.post_app);
+router.post('/roleApp/', dashboardController.post_app);
 
 
 module.exports = router;
