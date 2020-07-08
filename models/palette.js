@@ -9,7 +9,7 @@ var paletteSchema = new Schema({
 	name: {
 		type:String,
 		required:true,
-		unique:false
+		unique:true
 	},
 	content:{
 		type:String

@@ -277,3 +277,12 @@ exports.post_modifyRoles = (req, res, next) => {
 	console.log("delete " + deletedUsers);
 	lol(role, deletedUsers, addedUsers, ecoreURI, res);
 }
+
+exports.post_app = (req, res) => {
+	var paletteName = req.body.role;
+	Palette.findOne({name:paletteName}, function(err, palette) {
+		Role.find({ecoreURI: palette.ecoreURI}, function(err, roles) {
+			util.sendJsonResponse(res, roles);
+		});
+	});
+}
