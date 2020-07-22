@@ -1,15 +1,17 @@
 extends ../layout
 
 block content
-  h1 Dashboard
+  .jumbotron
+    h1 Dashboard
     if roleOnWeb == 'admin'
-      p The admin dashboard gives access to all DSL even those he is not owning.
+      p The admin's dashboard gives access to all DSL management even those he is not owning.
     else
       if roleOnWeb == 'author'
-        p Here you can manage your own DSL.
+        p Here you can manage your own DSLs.
   h2 List of DSLs
-  ul(style="list-style: none;")
-    each ecore, i in ecorelist
-      li 
-        a(href="/dashboard/#{ecore.name}") #{ecore.name}
+  div(style="margin-left: auto; margin-right: auto; display: table;")
+    ul(style="text-align: left; list-style: none;")
+      each ecore, i in ecorelist
+        li
+          a(href="/dashboard/#{ecore.name}") #{ecore.name}
   p

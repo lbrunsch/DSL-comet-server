@@ -17,13 +17,13 @@ block content
           form(name="modifyRoles",method="POST",action="/dashboard/#{ecoreName}/hierarchy/update")
             h4 
               b Add new user(s)
-            select(name="addedUsers" size="6" multiple)
+            select(name="addedUsers" size="3" multiple)
               each user, k in users
                 option(value="#{user.user}") #{user.user}
             br
             h4 
               b Remove user(s)
-            select(name="deletedUsers" size="6" multiple)
+            select(name="deletedUsers" size="3" multiple)
               each user, k in roles.usernames
                 option(value="#{user}") #{user}
             br
