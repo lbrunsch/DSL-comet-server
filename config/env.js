@@ -15,7 +15,8 @@ process.argv.forEach(function (val, index, array) {
   	password = val
   }
 });
-var database = "mongodb://" +username+":"+password + "@ds115546.mlab.com:15546/diagrameditor";
+//var database = "mongodb://" +username+":"+password + "@ds115546.mlab.com:15546/diagrameditor";
+var database = "mongodb+srv://" +username+":"+password + "@diagrameditor.ciejm.mongodb.net/diagrameditor?retryWrites=true&w=majority";
 
 module.exports = {
     development: {
