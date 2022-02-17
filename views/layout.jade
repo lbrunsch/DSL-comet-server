@@ -13,7 +13,7 @@ html( lang="en" )
     link(rel='stylesheet', href='/main.css', type="text/css")
 
     body
-        
+
         +nav("DSL-Comet", "dropdown_menu")
             +nav_item( "/" ) Home
             if isAuthenticated
@@ -30,11 +30,13 @@ html( lang="en" )
                 +nav_item( "/diagrams" ) Models
               +nav_item( "/signin/" ) Sign In
               +nav_item( "/signup/" ) Sign Up
-        
-        center        
-          block content    
-        
+
+        center
+          block content
+
           .jumbotron
+            p
+              This work has been funded by the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement n∘ 813884 (Lowcomote [96]), by the Spanish Ministry of Science (project MASSIVE, RTI2018-095255-B-I00), and by the R&D programme of Madrid (project FORTE, P2018/TCS-4314).
             table
               tr
                 td
@@ -44,10 +46,6 @@ html( lang="en" )
                 td
                   img(style="height:130px; margin-right: 40px;", src="https://diagrameditorserver.herokuapp.com/images/miso.png")
 
-            
+
     script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
     script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
-
-    
-        
-    
